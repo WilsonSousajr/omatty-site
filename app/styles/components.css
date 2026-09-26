@@ -190,18 +190,55 @@
   }
 }
 
-/* CastPlayer, and the text poster it shows before and without the player. */
+/* CastPlayer, and the text poster it shows before and without the player.
+   The poster takes the player's own geometry, measured in a browser: a
+   1.67:1 box, 120 columns across it, rows at 1.6 line height. Anything
+   else and the page jumps when the player replaces it. */
+/* The player is laid over the poster rather than swapped for it: the poster
+   keeps its place (no layout shift) and stays in the accessibility tree. */
+.cast-player {
+  position: relative;
+}
+
+.cast-player > div:first-child {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.cast-player__poster.is-covered {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .cast-player__poster {
-  overflow-x: auto;
+  container-type: inline-size;
+  aspect-ratio: 1.67;
+  overflow: hidden;
 }
 
 .cast-poster {
   margin: 0;
+  padding: 0.6em 0.8em;
   color: var(--color-text);
   font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
-  font-size: clamp(0.4rem, 1.05vw, 0.8rem);
-  line-height: 1.3;
+  /* 120 columns of a 0.6em-wide monospace, plus the player's side padding. */
+  font-size: calc(100cqw / 74);
+  line-height: 1.45;
   white-space: pre;
+}
+
+/* A phone gets the player's fixed readable size and scrolls instead. */
+@media (max-width: 40rem) {
+  .cast-player__poster {
+    aspect-ratio: auto;
+    overflow-x: auto;
+  }
+
+  .cast-poster {
+    font-size: 9px;
+    line-height: 1.33;
+  }
 }
 
 .cast-player .ap-wrapper {
@@ -213,4 +250,224 @@
   --term-color-background: var(--color-surface);
   --term-color-foreground: var(--color-text);
   border-radius: 0;
+}
+
+/* Section: every block after the hero, divided the way the TUI divides panes. */
+.section {
+  padding: clamp(3rem, 6vw, 4.5rem) 0;
+  border-top: 1px solid var(--color-hairline);
+}
+
+.section h2 {
+  max-width: 24ch;
+  margin-bottom: 1.75rem;
+  font-size: var(--text-h2);
+  font-weight: 600;
+}
+
+.section h3 {
+  font-family: var(--font-body);
+  font-variation-settings: normal;
+  word-spacing: normal;
+  letter-spacing: 0;
+  font-size: var(--text-lead);
+  font-weight: 600;
+}
+
+.prose > * + * {
+  margin-top: 1rem;
+}
+
+.section__more {
+  margin-top: 1.25rem;
+}
+
+.section__note {
+  margin-top: 2rem;
+  color: var(--color-muted);
+}
+
+/* HowItWorks: a real sequence, so it is numbered, read left to right. */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 2.5rem 2rem;
+  counter-reset: step;
+}
+
+.steps__item {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-hairline);
+  counter-increment: step;
+}
+
+.steps__item::before {
+  content: counter(step);
+  display: block;
+  margin-bottom: 0.75rem;
+  color: var(--color-muted);
+  font-family: var(--font-display);
+}
+
+.steps__item p {
+  margin-top: 0.5rem;
+}
+
+/* KeyTable: the README's key table, set as a definition list. */
+.key-table {
+  max-width: 60rem;
+  margin-top: 2rem;
+}
+
+.key-table__row {
+  display: grid;
+  gap: 0.25rem 2rem;
+  padding: 0.9rem 0;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+@media (min-width: 48rem) {
+  .key-table__row {
+    grid-template-columns: 14rem 1fr;
+  }
+}
+
+.key-table code {
+  color: var(--color-ink);
+  white-space: nowrap;
+}
+
+/* Compare */
+.compare__scroll {
+  margin: 2rem 0;
+  overflow-x: auto;
+}
+
+.compare {
+  width: 100%;
+  max-width: 60rem;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.compare th,
+.compare td {
+  padding: 0.9rem 1.5rem 0.9rem 0;
+  border-bottom: 1px solid var(--color-hairline);
+  vertical-align: top;
+}
+
+.compare thead th {
+  color: var(--color-muted);
+  font-size: var(--text-small);
+  font-weight: 500;
+}
+
+.compare tbody th {
+  width: 34%;
+  hyphens: none;
+  color: var(--color-ink);
+  font-weight: 600;
+}
+
+/* A product name is one word: "claude-squad" must not break at its hyphen.
+   On a phone the names may still wrap after a comma. */
+@media (min-width: 48rem) {
+  .compare tbody th {
+    width: auto;
+    min-width: 11rem;
+    white-space: nowrap;
+  }
+}
+
+/* Limits */
+.limits {
+  padding-left: 1.25rem;
+  list-style: "– ";
+}
+
+.limits li::marker {
+  color: var(--color-muted);
+}
+
+/* Faq: <details>, so the motion answers a click and nothing else. */
+.faq__item {
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.faq__item summary {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 0;
+  color: var(--color-ink);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+}
+
+.faq__item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq__item summary::after {
+  content: "+";
+  color: var(--color-muted);
+  font-family: var(--font-display);
+  transition: transform 150ms ease;
+}
+
+.faq__item[open] summary::after {
+  transform: rotate(45deg);
+}
+
+.faq__item p {
+  padding-bottom: 1.25rem;
+}
+
+.prose.faq > * + * {
+  margin-top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faq__item summary::after {
+    transition: none;
+  }
+}
+
+/* Footer */
+.site-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 1rem 2rem;
+  padding: 2.5rem 0 3.5rem;
+  border-top: 1px solid var(--color-hairline);
+  color: var(--color-muted);
+  font-size: var(--text-small);
+}
+
+.site-footer p {
+  margin-right: auto;
+}
+
+.site-footer__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.site-footer a,
+.site-nav__github {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.site-footer a:hover,
+.site-nav__github:hover {
+  color: var(--color-ink);
+}
+
+.site-nav__github {
+  font-size: var(--text-small);
 }

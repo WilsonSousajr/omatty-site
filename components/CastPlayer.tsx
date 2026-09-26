@@ -58,7 +58,8 @@ function usePlayer(src: string, posterAt: number) {
 /**
  * A real omatty recording (invariant 4), played as text. Until the player
  * loads - and forever without JS - the fallback shows the poster frame as
- * text; once it loads, the fallback stays for screen readers only.
+ * text. Once it loads, the player is laid over the fallback, which stays in
+ * place (so nothing shifts) and in the accessibility tree.
  *
  *   <CastPlayer src="/casts/hero.cast" posterAt={17} fallback={<pre>…</pre>} />
  */
@@ -74,8 +75,14 @@ export function CastPlayer({
   const { mount, ready } = usePlayer(src, posterAt);
   return (
     <div className="cast-player">
-      <div ref={mount} aria-hidden="true" />
-      <div className={ready ? "sr-only" : "cast-player__poster"}>
+      {/* Not aria-hidden: the player's controls are focusable, and under
+          reduced motion its play button is the only way to start it (omatty#510). */}
+      <div ref={mount} />
+      <div
+        className={
+          ready ? "cast-player__poster is-covered" : "cast-player__poster"
+        }
+      >
         {fallback}
       </div>
     </div>

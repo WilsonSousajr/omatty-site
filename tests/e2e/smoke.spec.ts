@@ -49,10 +49,12 @@ test("the recording's player mounts in the frame and its text poster steps aside
   await page.goto("/en");
   const frame = page.getByRole("figure", { name: "A real omatty session" });
   await expect(frame.locator(".ap-player")).toBeVisible();
-  // sr-only, not hidden: a screen reader keeps the text version. Playwright
-  // counts a 1px sr-only box as visible, so assert the state itself.
+  // Covered in place, not removed: a screen reader keeps the text version,
+  // and the page does not shift when the player arrives.
+  // A whole class token: /is-covered/ alone also matched a fused
+  // "cast-player__posteris-covered", and passed while the poster was broken.
   await expect(frame.locator(".cast-poster").locator("..")).toHaveClass(
-    /sr-only/,
+    /(^|\s)is-covered(\s|$)/,
   );
 });
 
@@ -63,5 +65,24 @@ test("without JavaScript the recording is still there, as its text poster", asyn
   const page = await context.newPage();
   await page.goto("/en");
   await expect(page.locator(".cast-poster")).toContainText("READY");
+  await context.close();
+});
+
+test("every nav link lands on a section that exists", async ({ page }) => {
+  await page.goto("/en");
+  const nav = page.getByRole("navigation", { name: "Sections" });
+  for (const href of await nav
+    .getByRole("link")
+    .evaluateAll((as) => as.map((a) => a.getAttribute("href")))) {
+    await expect(page.locator(href ?? "#missing")).toHaveCount(1);
+  }
+});
+
+test("an FAQ answer opens without JavaScript", async ({ browser }) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto("/pt");
+  await page.getByText("Quanto custa?").click();
+  await expect(page.getByText(/gratuito e tem licença MIT/)).toBeVisible();
   await context.close();
 });
