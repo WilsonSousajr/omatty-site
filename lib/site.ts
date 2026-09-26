@@ -19,5 +19,5 @@ export function repoFile(path: string): string {
 
 // One value to change when the site moves to its own domain.
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://omatty-site.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://omatty.vercel.app"
 ).replace(/\/$/, "");
