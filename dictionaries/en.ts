@@ -1,7 +1,7 @@
 /**
  * Every English string on the page. Its shape is the Dictionary type, and
  * pt.ts must satisfy it, so a key added here and not translated fails tsc
- * (AGENTS.md, invariant 5).
+ * (AGENTS.md, invariant 5). "{version}" is filled from lib/site.ts.
  */
 export const en = {
   meta: {
@@ -9,8 +9,23 @@ export const en = {
     description:
       "A terminal ADE for parallel Claude Code sessions that runs your project's own check line in each session's worktree and puts the verdict on its card.",
   },
+  nav: {
+    home: "omatty, home",
+    github: "GitHub",
+    language: "Language",
+  },
+  copy: {
+    copy: "Copy",
+    copied: "Copied",
+    failed: "Select and copy",
+  },
   hero: {
     headline: "Run agents in parallel. Know which ones got it right.",
+    lead: "A terminal ADE for parallel Claude Code sessions, across every repository you work in.",
+    claim:
+      "omatty runs your project's own check line inside each session's worktree and puts the verdict on the session's card.",
+    source: "Read the source",
+    status: "v{version}, pre-1.0, for macOS and Linux.",
   },
 };
 
