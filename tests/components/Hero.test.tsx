@@ -1,9 +1,12 @@
 import { render, screen } from "@testing-library/react";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 import { Hero } from "@/components/Hero";
 import { Nav } from "@/components/Nav";
 import { en } from "@/dictionaries/en";
 import { INSTALL_CMD, REPO_URL, VERSION } from "@/lib/site";
+
+// The player is CastPlayer's subject, not the hero's.
+vi.mock("asciinema-player", () => ({ create: () => ({ dispose() {} }) }));
 
 describe("Hero", () => {
   test("leads with the headline, the one claim and the install command", () => {
@@ -20,6 +23,13 @@ describe("Hero", () => {
     expect(
       screen.getByText(`v${VERSION}, pre-1.0, for macOS and Linux.`),
     ).toBeInTheDocument();
+  });
+
+  test("shows the real recording in a frame, with its text poster and an honest caption", () => {
+    render(<Hero dict={en} />);
+    const frame = screen.getByRole("figure", { name: en.hero.recording });
+    expect(frame).toHaveTextContent("READY");
+    expect(screen.getByText(/scripted stand-in/)).toBeInTheDocument();
   });
 
   test("links to the source", () => {

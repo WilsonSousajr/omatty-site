@@ -25,6 +25,9 @@ export const en = {
     claim:
       "omatty runs your project's own check line inside each session's worktree and puts the verdict on the session's card.",
     source: "Read the source",
+    recording: "A real omatty session",
+    caption:
+      "Real omatty v{version} running a real gate on two Go repositories: one session's tests fail, the failure goes back, and the fix goes green. The agent in each session is a scripted stand-in, so the recording is the same every time.",
     status: "v{version}, pre-1.0, for macOS and Linux.",
   },
 };

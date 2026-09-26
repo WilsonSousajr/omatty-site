@@ -42,3 +42,26 @@ test("the copy button puts the exact install command on the clipboard", async ({
     install,
   );
 });
+
+test("the recording's player mounts in the frame and its text poster steps aside", async ({
+  page,
+}) => {
+  await page.goto("/en");
+  const frame = page.getByRole("figure", { name: "A real omatty session" });
+  await expect(frame.locator(".ap-player")).toBeVisible();
+  // sr-only, not hidden: a screen reader keeps the text version. Playwright
+  // counts a 1px sr-only box as visible, so assert the state itself.
+  await expect(frame.locator(".cast-poster").locator("..")).toHaveClass(
+    /sr-only/,
+  );
+});
+
+test("without JavaScript the recording is still there, as its text poster", async ({
+  browser,
+}) => {
+  const context = await browser.newContext({ javaScriptEnabled: false });
+  const page = await context.newPage();
+  await page.goto("/en");
+  await expect(page.locator(".cast-poster")).toContainText("READY");
+  await context.close();
+});
