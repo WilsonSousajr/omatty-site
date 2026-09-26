@@ -1,0 +1,15 @@
+{
+  "threshold": 3,
+  "minTokens": 50,
+  "reporters": ["console"],
+  "path": ["."],
+  "format": ["typescript", "tsx", "javascript", "css"],
+  "ignore": [
+    "**/node_modules/**",
+    "**/.next/**",
+    "**/coverage/**",
+    "**/playwright-report/**",
+    "**/.lighthouseci/**"
+  ],
+  "gitignore": true
+}

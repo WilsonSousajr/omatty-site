@@ -40,3 +40,8 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 *.bak-*
+
+# gate artefacts
+/playwright-report
+/test-results
+/.lighthouseci

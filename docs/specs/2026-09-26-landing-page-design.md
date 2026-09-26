@@ -21,7 +21,7 @@ Decisions made during brainstorming:
 
 This rule is binding and is enforced by a test.
 
-- **The one claim:** *omatty runs your project's own check line inside each session's worktree and puts the verdict on the session's card.*
+- **The one claim:** _omatty runs your project's own check line inside each session's worktree and puts the verdict on the session's card._
 - **The frame:** other tools optimise how much agent work is in flight; omatty optimises how quickly you can tell whether what came back is any good.
 - **Never on the page:** "the only tool…", "~150 orchestrators", any install method that doesn't exist, or "`claude agents` doesn't do this". The honest line about `claude agents` is that it doesn't run your verification in each session's directory.
 - **Limits stated on the page itself:** pre-1.0; macOS and Linux only, no Windows; Claude, with Codex only half-spiked; `dtach` and `gh` optional.
@@ -52,6 +52,7 @@ scripts/gate.sh              # the full local gate; CI runs the same steps
 ```
 
 **Stack:**
+
 - Next 16 with TypeScript (strict) and Tailwind v4. The TUI palette goes in `@theme`.
 - `next/font`: JetBrains Mono for display and code, IBM Plex Sans for body.
 - `asciinema-player` from npm, loaded client-only.
@@ -97,20 +98,20 @@ scripts/gate.sh              # the full local gate; CI runs the same steps
 
 `scripts/gate.sh` runs the steps below in order and fails on the first red. `ci.yml` runs the same steps, on `pull_request` and on pushes to `main`, on ubuntu, with Node pinned. Each step is the web analogue of an omatty gate step:
 
-| Step | Command | omatty analogue |
-|---|---|---|
-| format | `prettier --check .` | `gofmt -l .` |
-| lint | `eslint . --max-warnings 0`: `complexity` 10, `max-depth` 2, `sonarjs/cognitive-complexity` 15, `max-lines` 500, `max-lines-per-function` 20 (skipping JSX-only components via override), `@typescript-eslint/no-explicit-any`, `no-console` | golangci-lint (gocyclo, gocognit, forbidigo) |
-| types | `tsc --noEmit` (strict, `noUncheckedIndexedAccess`) | `go vet` |
-| deps hygiene | `knip` (unused files, exports and dependencies) + `npm ci` lockfile integrity | `go mod tidy -diff` |
-| vuln | `npm audit --omit=dev --audit-level=high` | govulncheck |
-| boundaries | `depcruise`: no cycles; `asciinema-player` only from `CastPlayer`; `dictionaries/` imports nothing; `lib/` never imports `components/` | depguard + check-deps |
-| duplication | `jscpd --threshold 3` | dupl |
-| test + coverage | `vitest run --coverage` with thresholds of 90 for lines, branches, functions and statements, over `lib/`, `components/` and `proxy.ts` | `go test -race` + check-coverage 90 |
-| claims | vitest `claims.test.ts`: banned phrases and the key-parity check | (site-specific invariant) |
-| build | `next build` (both locales pre-rendered) | `go build` |
-| smoke | Playwright against `next start`: `/` redirects by language, `/en` and `/pt` render, the copy button copies, the player mounts, and no console errors | ptyrun real-binary smoke |
-| budget | Lighthouse CI (`lhci autorun`): perf ≥ 95, a11y ≥ 95, SEO = 100 | (none) |
+| Step            | Command                                                                                                                                                                                                                                      | omatty analogue                              |
+| --------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------- |
+| format          | `prettier --check .`                                                                                                                                                                                                                         | `gofmt -l .`                                 |
+| lint            | `eslint . --max-warnings 0`: `complexity` 10, `max-depth` 2, `sonarjs/cognitive-complexity` 15, `max-lines` 500, `max-lines-per-function` 20 (skipping JSX-only components via override), `@typescript-eslint/no-explicit-any`, `no-console` | golangci-lint (gocyclo, gocognit, forbidigo) |
+| types           | `tsc --noEmit` (strict, `noUncheckedIndexedAccess`)                                                                                                                                                                                          | `go vet`                                     |
+| deps hygiene    | `knip` (unused files, exports and dependencies) + `npm ci` lockfile integrity                                                                                                                                                                | `go mod tidy -diff`                          |
+| vuln            | `npm audit --omit=dev --audit-level=high`                                                                                                                                                                                                    | govulncheck                                  |
+| boundaries      | `depcruise`: no cycles; `asciinema-player` only from `CastPlayer`; `dictionaries/` imports nothing; `lib/` never imports `components/`                                                                                                       | depguard + check-deps                        |
+| duplication     | `jscpd --threshold 3`                                                                                                                                                                                                                        | dupl                                         |
+| test + coverage | `vitest run --coverage` with thresholds of 90 for lines, branches, functions and statements, over `lib/`, `components/` and `proxy.ts`                                                                                                       | `go test -race` + check-coverage 90          |
+| claims          | vitest `claims.test.ts`: banned phrases and the key-parity check                                                                                                                                                                             | (site-specific invariant)                    |
+| build           | `next build` (both locales pre-rendered)                                                                                                                                                                                                     | `go build`                                   |
+| smoke           | Playwright against `next start`: `/` redirects by language, `/en` and `/pt` render, the copy button copies, the player mounts, and no console errors                                                                                         | ptyrun real-binary smoke                     |
+| budget          | Lighthouse CI (`lhci autorun`): perf ≥ 95, a11y ≥ 95, SEO = 100                                                                                                                                                                              | (none)                                       |
 
 Each tool's config asserts itself, following omatty's `TestDepguard_ExecAllowlistMatchesReality`: a small test fails if `gate.sh` and `ci.yml` list different steps, so they can't silently diverge.
 
@@ -118,18 +119,19 @@ Each tool's config asserts itself, following omatty's `TestDepguard_ExecAllowlis
 
 - **Tokens** come from `internal/ui/style.go`:
 
-  | Token | Hex | xterm |
-  |---|---|---|
-  | ink | `#dadada` | 253 |
-  | text | `#bcbcbc` | 250 |
-  | muted | `#8a8a8a` | 245 |
-  | hairline | `#444444` | 238 |
-  | accent | `#5fafff` | 75 |
-  | amber | `#ffaf00` | 214 |
-  | green | `#5fd787` | 78 |
-  | red | `#ff5f5f` | 203 |
+  | Token    | Hex       | xterm |
+  | -------- | --------- | ----- |
+  | ink      | `#dadada` | 253   |
+  | text     | `#bcbcbc` | 250   |
+  | muted    | `#8a8a8a` | 245   |
+  | hairline | `#444444` | 238   |
+  | accent   | `#5fafff` | 75    |
+  | amber    | `#ffaf00` | 214   |
+  | green    | `#5fd787` | 78    |
+  | red      | `#ff5f5f` | 203   |
 
   The background is near-black `#0b0b0c`, with a surface tone of `#121214`.
+
 - **Colour rule:** one meaning per hue, the same as the TUI. Green means pass, red means fail, amber means waiting, and accent is the only interactive colour.
 - **Frames:** sections are drawn with 1px hairlines and rounded terminal frames, echoing the TUI's border. There are no gradient glows.
 - **Type:** headings in mono at a large size with tight tracking; body in sans at 17–18px.
@@ -190,7 +192,7 @@ We are deliberately leaving out testimonials, a star counter, an email capture a
 Inline, by me.
 
 1. Create the repo with `gh repo create WilsonSousajr/omatty-site --public`, clone it to `~/Projects`, and commit the spec, AGENTS.md and CLAUDE.md. The ai-memory block comes from its CLI.
-2. Scaffold Next.js with TypeScript and Tailwind, then build the whole gate *before any feature*: prettier, the eslint limits, tsc, knip, audit, depcruise, jscpd, vitest with coverage, Playwright, lhci, `scripts/gate.sh`, `ci.yml` and the gate-parity test.
+2. Scaffold Next.js with TypeScript and Tailwind, then build the whole gate _before any feature_: prettier, the eslint limits, tsc, knip, audit, depcruise, jscpd, vitest with coverage, Playwright, lhci, `scripts/gate.sh`, `ci.yml` and the gate-parity test.
    - Prove each step can fail with a negative control: add a deliberate violation per step, see it go red, then remove it.
    - Protect `main`, with the CI check required.
    - From here on, one PR per slice to `main`.

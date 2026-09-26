@@ -102,7 +102,7 @@ npx eslint . --max-warnings 0                # lint + the complexity limits belo
 npx tsc --noEmit                             # types
 npx knip                                     # no unused files, exports or dependencies
 npm audit --omit=dev --audit-level=high      # no known high vulnerability shipped
-npx depcruise --config .dependency-cruiser.cjs app components lib dictionaries proxy.ts
+npx depcruise --config .dependency-cruiser.cjs .   # import boundaries
 npx jscpd                                    # duplication
 npx vitest run --coverage                    # tests, 90% coverage floor
 npx next build                               # both locales pre-render
@@ -181,6 +181,7 @@ here passes on a page that says something false.
      session's directory.
 
    `tests/claims.test.ts` fails on each of these, in both dictionaries.
+
 3. **The limits are on the page, not in a reply after someone finds them:**
    pre-1.0, macOS and Linux only (no Windows), Claude Code with Codex only
    half-spiked, and `dtach` and `gh` optional.
@@ -189,7 +190,7 @@ here passes on a page that says something false.
    trimming idle time, and never draw a mock-up of the TUI and present it as
    the product.
 5. **English and Portuguese have the same keys.** `pt.ts` `satisfies
-   Dictionary`, so a missing or extra key fails `tsc`.
+Dictionary`, so a missing or extra key fails `tsc`.
 6. **No third-party cookies or trackers.** Vercel Web Analytics is cookieless,
    so the page needs no consent banner. Adding anything that sets a cookie is
    a decision, not a change.
@@ -273,6 +274,7 @@ commit message and explain why.
 - `scripts/demo/README.md`: how the hero recording is made.
 
 <!-- ai-memory:start -->
+
 ## Long-term memory (ai-memory)
 
 This project uses [ai-memory](https://github.com/akitaonrails/ai-memory)
@@ -281,10 +283,10 @@ for cross-session continuity.
 **Default to the current project - always.** Every ai-memory tool
 auto-scopes to the project resolved from your session's working
 directory. **Do NOT pass `project`, `workspace`, or `cwd` arguments unless
-the user explicitly references a *different* project by name** (e.g. "what
+the user explicitly references a _different_ project by name** (e.g. "what
 did we decide in the `other-app` project?"). Phrases like "this project",
 "here", "we", "our work", and "where did we leave off" all mean the
-*current* project, so call tools with no scoping args.
+_current_ project, so call tools with no scoping args.
 
 This default assumes the MCP client can identify the current agent
 session. Static MCP clients in parallel sessions for the same user cannot
@@ -337,7 +339,7 @@ Many projects use CLAUDE.md for Claude Code and
 AGENTS.md for Codex / OpenCode / Cursor / Gemini CLI / Grok Build CLI / Kimi Code / Kiro CLI / Command Code,
 but if the project says one file is canonical, use that file.
 
-If the rule is a standing *user/team* preference that should apply to
+If the rule is a standing _user/team_ preference that should apply to
 every project (tech choices, code style, personal conventions), save it
 to ai-memory's reserved global scope instead — the durable-pages skill
 covers how. Default memory reads surface global-scope pages in every

@@ -1,0 +1,11 @@
+.next/
+out/
+coverage/
+node_modules/
+package-lock.json
+next-env.d.ts
+playwright-report/
+test-results/
+.lighthouseci/
+# Recordings are data, and invariant 4 says a cast is never edited by hand.
+public/casts/
