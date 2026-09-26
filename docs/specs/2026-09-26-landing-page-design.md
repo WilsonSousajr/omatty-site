@@ -10,7 +10,7 @@ Decisions made during brainstorming:
 
 - **Separate repo:** `github.com/WilsonSousajr/omatty-site`, public, cloned at `~/Projects/omatty-site`. It stays out of iCloud-synced `~/Documents`.
 - **Framework:** Next.js App Router, statically generated.
-- **Hosting:** Vercel on `*.vercel.app`, with `main` as production. The base URL lives in one config value.
+- **Hosting:** Vercel, with `main` as production, at `omatty.com` (bought 2026-09-26; `www` 308-redirects to it). The base URL lives in one config value.
 - **Pages:** one page, in English and Portuguese (`/en`, `/pt`).
 - **Hero:** a real omatty recording played as text with asciinema-player.
 - **Look:** terminal-native dark, built on the TUI's own palette.
@@ -37,7 +37,7 @@ app/
   [lang]/opengraph-image.tsx # next/og, per-language share card
   sitemap.ts  robots.ts
 proxy.ts                     # "/" -> /pt or /en by Accept-Language (Next 16 proxy)
-lib/site.ts                  # SITE_URL (env NEXT_PUBLIC_SITE_URL, default vercel.app), VERSION, INSTALL_CMD, REPO_URL
+lib/site.ts                  # SITE_URL (env NEXT_PUBLIC_SITE_URL, default https://omatty.com), VERSION, INSTALL_CMD, REPO_URL
 lib/i18n.ts                  # locales, getDictionary(lang)
 dictionaries/en.ts pt.ts     # pt typed `satisfies Dictionary` from en; every string lives here
 components/                  # one file per section + primitives
