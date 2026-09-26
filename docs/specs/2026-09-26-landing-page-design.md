@@ -48,7 +48,7 @@ scripts/demo/                # reproducible recording setup (see Recording)
 tests/                       # vitest (unit, claims, gate-parity); e2e/ Playwright smoke
 scripts/gate.sh              # the full local gate; CI runs the same steps
 .github/workflows/ci.yml     # gate on PR + push to main
-.nvmrc  eslint.config.mjs  .prettierrc  .dependency-cruiser.cjs  knip.json  .jscpd.json  lighthouserc.json  vitest.config.ts  playwright.config.ts
+.nvmrc  eslint.config.mjs  .prettierrc  .dependency-cruiser.cjs  knip.json  .jscpd.json  lighthouserc.json  vitest.config.mts  playwright.config.ts
 ```
 
 **Stack:**
@@ -106,7 +106,7 @@ scripts/gate.sh              # the full local gate; CI runs the same steps
 | deps hygiene    | `knip` (unused files, exports and dependencies) + `npm ci` lockfile integrity                                                                                                                                                                | `go mod tidy -diff`                          |
 | vuln            | `npm audit --omit=dev --audit-level=high`                                                                                                                                                                                                    | govulncheck                                  |
 | boundaries      | `depcruise`: no cycles; `asciinema-player` only from `CastPlayer`; `dictionaries/` imports nothing; `lib/` never imports `components/`                                                                                                       | depguard + check-deps                        |
-| duplication     | `jscpd --threshold 3`                                                                                                                                                                                                                        | dupl                                         |
+| duplication     | `jscpd` (any clone fails)                                                                                                                                                                                                                    | dupl                                         |
 | test + coverage | `vitest run --coverage` with thresholds of 90 for lines, branches, functions and statements, over `lib/`, `components/` and `proxy.ts`                                                                                                       | `go test -race` + check-coverage 90          |
 | claims          | vitest `claims.test.ts`: banned phrases and the key-parity check                                                                                                                                                                             | (site-specific invariant)                    |
 | build           | `next build` (both locales pre-rendered)                                                                                                                                                                                                     | `go build`                                   |
