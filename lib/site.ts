@@ -17,7 +17,7 @@ export function repoFile(path: string): string {
   return `${REPO_URL}/blob/main/${path}`;
 }
 
-// One value to change when the site moves to its own domain.
+// omatty.com since 2026-09-26; www.omatty.com 308-redirects here on Vercel.
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://omatty.vercel.app"
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://omatty.com"
 ).replace(/\/$/, "");
