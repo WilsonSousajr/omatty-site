@@ -22,6 +22,9 @@ export const pt = {
     claim:
       "O omatty roda a linha de verificação do próprio projeto dentro da worktree de cada sessão e coloca o veredito no card da sessão.",
     source: "Ler o código",
+    recording: "Uma sessão real do omatty",
+    caption:
+      "O omatty v{version} de verdade, rodando um gate de verdade em dois repositórios Go: os testes de uma sessão falham, a falha volta para ela e a correção fica verde. O agente de cada sessão é um substituto roteirizado, para a gravação ser sempre igual.",
     status: "v{version}, pré-1.0, para macOS e Linux.",
   },
 } satisfies Dictionary;
