@@ -6,11 +6,21 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "gate:format": "prettier --check .",
+    "gate:lint": "eslint . --max-warnings 0",
+    "gate:types": "next typegen && tsc --noEmit",
+    "gate:deps": "knip",
+    "gate:vuln": "npm audit --omit=dev --audit-level=high",
+    "gate:boundaries": "depcruise --config .dependency-cruiser.cjs .",
+    "gate:dupl": "jscpd",
+    "gate:test": "vitest run --coverage",
+    "gate:build": "next build",
+    "gate:smoke": "playwright test",
+    "gate:budget": "lhci autorun",
+    "test": "vitest",
+    "format": "prettier --write ."
   },
   "dependencies": {
-    "@vercel/analytics": "2.0.1",
-    "asciinema-player": "3.17.0",
     "next": "16.3.6",
     "react": "19.2.8",
     "react-dom": "19.2.8"
@@ -20,8 +30,6 @@
     "@playwright/test": "1.63.0",
     "@tailwindcss/postcss": "4.3.3",
     "@testing-library/jest-dom": "7.0.1",
-    "@testing-library/react": "16.3.3",
-    "@testing-library/user-event": "14.6.7",
     "@types/node": "24.19.0",
     "@types/react": "19.3.0",
     "@types/react-dom": "19.3.0",

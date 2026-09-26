@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  # The steps below are scripts/gate.sh, one per line so a failure names its
+  # step. tests/gate-parity.test.ts keeps the two lists identical.
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          # Exact, not "24": a floating version drifts from the one the gate
+          # was proven on (omatty#261).
+          node-version: 24.21.0
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - run: npm run gate:format
+      - run: npm run gate:lint
+      - run: npm run gate:types
+      - run: npm run gate:deps
+      - run: npm run gate:vuln
+      - run: npm run gate:boundaries
+      - run: npm run gate:dupl
+      - run: npm run gate:test
+      - run: npm run gate:build
+      - run: npm run gate:smoke
+      - run: npm run gate:budget
