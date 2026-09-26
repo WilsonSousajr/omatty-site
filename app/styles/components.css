@@ -383,7 +383,7 @@
 /* Limits */
 .limits {
   padding-left: 1.25rem;
-  list-style: "– ";
+  list-style: disc;
 }
 
 .limits li::marker {

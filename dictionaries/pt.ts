@@ -7,7 +7,7 @@ import type { Dictionary } from "./en";
  */
 export const pt = {
   meta: {
-    title: "omatty — saiba qual agente acertou",
+    title: "omatty: saiba qual agente acertou",
     description:
       "Um ADE de terminal para sessões paralelas do Claude Code que roda a linha de verificação do seu próprio projeto na worktree de cada sessão e coloca o veredito no card dela.",
   },
@@ -99,8 +99,8 @@ export const pt = {
         text: "É um programa de terminal, então funciona por SSH numa máquina sem tela. Com o dtach instalado, sair desanexa em vez de encerrar as suas sessões.",
       },
       {
-        key: "omatty gate --stats",
-        text: "Tempo até o merge, e com que frequência o gate passa de primeira. O omatty não guarda nenhum outro número sobre si mesmo, e estes ficam na sua máquina.",
+        key: "omatty gate",
+        text: "Mostra o gate de um projeto, ou propõe um a partir do repositório e não roda nada antes de você confirmar. Também informa o tempo até o merge e com que frequência o gate passa de primeira, e esses números nunca saem da sua máquina.",
       },
     ],
     footprint:
@@ -174,7 +174,7 @@ export const pt = {
       },
       {
         q: "Ele muda a minha configuração do Claude Code?",
-        a: "Não. Ele nunca escreve no ~/.claude/settings.json. Os hooks são passados com --settings a cada sessão que ele inicia, então usar o omatty não deixa rastro na sua configuração do Claude.",
+        a: "Não. Ele nunca escreve no ~/.claude/settings.json. Os hooks são entregues a cada sessão que ele inicia, na linha de comando dessa sessão, então usar o omatty não deixa rastro na sua configuração do Claude.",
       },
       {
         q: "E se o meu projeto ainda não tiver um gate?",
