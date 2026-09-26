@@ -74,9 +74,17 @@ describe("CastPlayer", () => {
     expect(opts).toMatchObject({ fit: false, terminalFontSize: "9px" });
   });
 
-  test("hides the text poster from sight once the player exists, keeping it for screen readers", async () => {
-    await mountPlayer();
-    expect(screen.getByText("✓✓✗ test").parentElement).toHaveClass("sr-only");
+  test("covers the text poster in place once the player exists, so nothing moves and screen readers keep it", async () => {
+    const { container } = await mountPlayer();
+    const poster = container.querySelector(".cast-player__poster");
+    await waitFor(() => expect(poster).toHaveClass("is-covered"));
+    expect(poster).toContainElement(screen.getByText("✓✓✗ test"));
+    expect(poster).not.toHaveClass("sr-only");
+  });
+
+  test("keeps the player's controls reachable: nothing around it is aria-hidden (omatty#510)", async () => {
+    const { container } = await mountPlayer();
+    expect(container.querySelector("[aria-hidden='true']")).toBeNull();
   });
 
   test("disposes the player when it leaves the page", async () => {
