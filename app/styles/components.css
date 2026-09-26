@@ -1,0 +1,147 @@
+/* Component styles. One block per component, named after its file. */
+
+.page {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+@media (min-width: 48rem) {
+  .page {
+    padding: 0 2.5rem;
+  }
+}
+
+.prose {
+  max-width: 64ch;
+}
+
+/* Nav */
+.site-nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.75rem 2rem;
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--color-hairline);
+}
+
+.site-nav__mark {
+  color: var(--color-ink);
+  font-family: var(--font-display);
+  font-variation-settings: "wdth" 112.5;
+  font-weight: 700;
+  text-decoration: none;
+  margin-right: auto;
+}
+
+.site-nav__links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  font-size: var(--text-small);
+}
+
+.site-nav__links a,
+.lang-switch a {
+  color: var(--color-muted);
+  text-decoration: none;
+}
+
+.site-nav__links a:hover,
+.lang-switch a:hover {
+  color: var(--color-ink);
+}
+
+/* LangSwitch */
+.lang-switch {
+  display: flex;
+  gap: 1rem;
+  font-size: var(--text-small);
+}
+
+.lang-switch a[aria-current="page"] {
+  color: var(--color-ink);
+  text-decoration: underline;
+  text-decoration-color: var(--color-hairline);
+}
+
+/* Hero */
+.hero {
+  padding: clamp(3rem, 8vw, 6.5rem) 0 3rem;
+}
+
+.hero h1 {
+  font-size: var(--text-h1);
+  font-weight: 650;
+  max-width: 18ch;
+}
+
+.hero__lead {
+  margin-top: 1.75rem;
+  color: var(--color-muted);
+}
+
+.hero__claim {
+  margin-top: 0.5rem;
+  color: var(--color-ink);
+  max-width: 56ch;
+  font-size: var(--text-lead);
+  line-height: 1.5;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.75rem;
+  margin-top: 2.25rem;
+}
+
+.hero__status {
+  margin-top: 1.25rem;
+  color: var(--color-muted);
+  font-size: var(--text-small);
+}
+
+/* CopyCommand */
+.copy-command {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 100%;
+  padding: 0.6rem 0.6rem 0.6rem 1rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-hairline);
+  border-radius: 6px;
+}
+
+.copy-command__prompt {
+  color: var(--color-muted);
+  font-family: var(--font-display);
+}
+
+.copy-command__text {
+  min-width: 0;
+  color: var(--color-ink);
+  /* The whole command must be visible on a phone: it is what gets pasted.
+     A soft wrap copies as one line, and the button copies the exact text. */
+  overflow-wrap: break-word;
+}
+
+@media (max-width: 30rem) {
+  .copy-command__text {
+    font-size: 0.8125rem;
+  }
+}
+
+.copy-command__button {
+  flex: none;
+  padding: 0.35rem 0.75rem;
+  color: var(--color-ground);
+  background: var(--color-accent);
+  border-radius: 4px;
+  font-size: var(--text-small);
+  font-weight: 600;
+  cursor: pointer;
+}

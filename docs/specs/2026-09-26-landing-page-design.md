@@ -54,7 +54,7 @@ scripts/gate.sh              # the full local gate; CI runs the same steps
 **Stack:**
 
 - Next 16 with TypeScript (strict) and Tailwind v4. The TUI palette goes in `@theme`.
-- `next/font`: JetBrains Mono for display and code, IBM Plex Sans for body.
+- `next/font`: Martian Mono (expanded, `wdth` 112.5) for display and commands, Instrument Sans for body. Chosen over JetBrains Mono and IBM Plex in the design pass: those are the defaults any developer tool reaches for.
 - `asciinema-player` from npm, loaded client-only.
 - Vercel Web Analytics for cookieless page views. It needs no consent banner.
 
@@ -130,12 +130,12 @@ Each tool's config asserts itself, following omatty's `TestDepguard_ExecAllowlis
   | green    | `#5fd787` | 78    |
   | red      | `#ff5f5f` | 203   |
 
-  The background is near-black `#0b0b0c`, with a surface tone of `#121214`.
+  The ground is `#121212` (xterm 233) and a terminal frame's surface `#1c1c1c` (234): the terminal's own blacks, not an invented tint.
 
 - **Colour rule:** one meaning per hue, the same as the TUI. Green means pass, red means fail, amber means waiting, and accent is the only interactive colour.
 - **Frames:** sections are drawn with 1px hairlines and rounded terminal frames, echoing the TUI's border. There are no gradient glows.
 - **Type:** headings in mono at a large size with tight tracking; body in sans at 17–18px.
-- **Motion:** the cast player, plus a subtle reveal on scroll. Both respect `prefers-reduced-motion`, and under it the player shows a still frame.
+- **Motion:** the cast player, and nothing else. It respects `prefers-reduced-motion`, and under it the player shows a still frame. Scroll reveals were cut in the design pass: an entrance on every section is the generic default, and the one moment worth watching is the verdict landing.
 - **Mobile:** works at 360px. The player scales as text, and on narrow screens it falls back to a poster frame with a tap-to-play control.
 
 ## Page sections
@@ -155,7 +155,7 @@ All copy comes from the dictionaries.
    2. The gate runs in each worktree.
    3. The verdict lands on the card, and failures go back into the session.
    4. Diff review, with comments anchored to line content, sent as one message.
-5. **Features** (grid): works over SSH; coverage on the diff; detach and reattach with dtach; ship from the card (`ctrl+o p`); discover and adopt existing sessions; zero footprint (never writes `~/.claude/settings.json`); status from hooks and JSONL, never scraped from the screen.
+5. **Features**, set as a key table like the README's, not a card grid: a monospace left column of real keys and commands, a plain sentence on the right. No ✓ marks, because green means _passed_. works over SSH; coverage on the diff; detach and reattach with dtach; ship from the card (`ctrl+o p`); discover and adopt existing sessions; zero footprint (never writes `~/.claude/settings.json`); status from hooks and JSONL, never scraped from the screen.
 6. **What it won't do:** delegate, plan, schedule or decide for you.
 7. **Compare:** a condensed table from `docs/comparison.md`, including its "where others are ahead" rows (agent breadth, Windows, one-line installer, scrollback after reattach, diff rendering). Links to the full document.
 8. **Limits:** the list from the claim discipline section, verbatim in spirit.
