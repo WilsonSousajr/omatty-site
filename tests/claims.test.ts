@@ -40,6 +40,14 @@ const banned: [string, RegExp][] = [
     /\bsupports? (codex|gemini|aider)\b|\bsuporta (o )?(codex|gemini)\b/i,
   ],
   [
+    "a second agent said to be in progress, which #152 is not (omatty#515)",
+    /\bcodex\b[^.]*\b(in progress|em andamento)\b/i,
+  ],
+  [
+    "several repositories offered as a difference from claude agents, which spans all projects (omatty#515)",
+    /\b(span|spans|abrangem|abrange) (several|vários) repositórios?\b|\bspan several repositories\b/i,
+  ],
+  [
     "a hard-coded version, which drifts from lib/site.ts",
     /\bv?\d+\.\d+\.\d+\b/,
   ],

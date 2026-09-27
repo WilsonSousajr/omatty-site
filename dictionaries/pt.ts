@@ -28,7 +28,7 @@ export const pt = {
   },
   hero: {
     headline: "Rode agentes em paralelo. Saiba quais acertaram.",
-    lead: "Um ADE de terminal para sessões paralelas do Claude Code, em todos os repositórios em que você trabalha.",
+    lead: "Abrir sessões paralelas do Claude Code leva segundos. Conferir o trabalho delas é o gargalo, e este ADE de terminal foi feito para isso.",
     claim:
       "O omatty roda a linha de verificação do próprio projeto dentro da worktree de cada sessão e coloca o veredito no card da sessão.",
     source: "Ler o código",
@@ -139,10 +139,10 @@ export const pt = {
     headers: {
       feature: "O que você precisa",
       omatty: "omatty",
-      terminal: "Gerenciadores de sessão no terminal",
-      terminalExamples: "claude-squad, ccmanager, fleet",
-      desktop: "Apps de agentes para desktop",
-      desktopExamples: "Orca, Nimbalyst, Conductor",
+      herdr: "herdr",
+      herdrExamples: "com herdr-reviewr",
+      orca: "Orca",
+      orcaExamples: "app para desktop",
       claudeAgents: "claude agents",
       claudeAgentsExamples: "incluído no Claude Code",
     },
@@ -150,23 +150,21 @@ export const pt = {
     no: "Não",
     rows: [
       {
-        feature: "O seu próprio gate roda na worktree de cada sessão",
+        feature:
+          "A sua própria linha de verificação roda na worktree de cada sessão, com um veredito por etapa no cartão",
         id: "gate" as const,
       },
       {
-        feature: "As falhas voltam para a sessão com uma tecla",
+        feature: "As falhas do seu gate voltam para a sessão com uma tecla",
         id: "sendBack" as const,
       },
       {
-        feature: "Os comentários da revisão voltam para o agente",
-        id: "review" as const,
-      },
-      {
-        feature: "Funciona por SSH numa máquina sem tela",
-        id: "ssh" as const,
+        feature:
+          "Os comentários da revisão ficam na linha certa enquanto o Claude edita",
+        id: "anchor" as const,
       },
     ],
-    asOf: "Em setembro de 2026. Cada célula tem a fonte na comparação completa.",
+    asOf: "Em 27 de setembro de 2026. Cada célula tem a fonte na comparação completa.",
     more: "Ler a comparação completa",
   },
   faq: {
@@ -178,7 +176,11 @@ export const pt = {
       },
       {
         q: "Qual a diferença para o claude agents?",
-        a: "O claude agents lista as suas sessões em segundo plano, cada uma numa worktree, e é de graça e já vem incluído. Os painéis do omatty são interativos, abrangem vários repositórios e acrescentam um ciclo de revisão e um gate que roda no diretório de cada sessão.",
+        a: "O claude agents lista as suas sessões em segundo plano de todos os seus projetos, cada uma numa worktree, mostra os checks de cada pull request, e é de graça e já vem incluído. O omatty põe várias sessões ao vivo lado a lado, acrescenta um ciclo de revisão e roda a sua própria linha de verificação no diretório de cada sessão antes de qualquer push.",
+      },
+      {
+        q: "Qual a diferença para o herdr?",
+        a: "O herdr é um espaço de trabalho de terminal para muitos tipos de agente, e está à frente do omatty em amplitude: mais agentes, mais sistemas operacionais e várias máquinas numa janela. O omatty é mais estreito. Ele lê o estado do Claude a partir de hooks e transcrições, não da tela, nunca escreve nas suas configurações do Claude, mantém os comentários da revisão na linha certa enquanto o Claude edita e roda o seu gate em cada sessão.",
       },
       {
         q: "Ele envia alguma coisa para algum lugar?",
@@ -190,7 +192,7 @@ export const pt = {
       },
       {
         q: "Quais agentes ele roda?",
-        a: "O Claude Code hoje, como o binário claude de verdade. Um segundo agente, o Codex, está em andamento.",
+        a: "O Claude Code, como o binário claude de verdade. Outros agentes ainda não são suportados.",
       },
       {
         q: "Quanto custa?",

@@ -1,31 +1,32 @@
 /**
- * The comparison's facts, in one place for both languages: which kind of tool
- * does each thing. Every value is sourced in omatty's docs/comparison.md
- * (captured 2026-09-18) or docs/announcement.md; a cell that could not be
- * sourced for every column is not a row. The dictionaries only name the rows.
+ * The comparison's facts, in one place for both languages: which tool does
+ * each thing. Every value is sourced in omatty's docs/comparison.md and
+ * docs/research/ (refreshed 2026-09-27); a cell that could not be sourced for
+ * every column is not a row. Columns are named tools, not camps, because a
+ * camp's cell claims something about tools nobody read (omatty#515). The
+ * dictionaries only name the rows.
  *
- *   verdicts.gate.terminal === false
+ *   verdicts.gate.herdr === false
  */
-export const tools = ["omatty", "terminal", "desktop", "claudeAgents"] as const;
+export const tools = ["omatty", "herdr", "orca", "claudeAgents"] as const;
 
 export type Tool = (typeof tools)[number];
 
-export type RowId = "gate" | "sendBack" | "review" | "ssh";
+export type RowId = "gate" | "sendBack" | "anchor";
 
 export const verdicts: Record<RowId, Record<Tool, boolean>> = {
-  // comparison.md: "no other tool in this space does this - not the terminal
-  // managers, not the desktop apps"; announcement.md: claude agents does not
-  // run the project's verification in each session's directory.
-  gate: { omatty: true, terminal: false, desktop: false, claudeAgents: false },
+  // 2026-landscape.md §7.4: herdr's core and Orca run no local gate; their
+  // verdicts are the forge's CI, as is agent view's (§7.5).
+  gate: { omatty: true, herdr: false, orca: false, claudeAgents: false },
+  // Orca's "Fix broken checks" sends CI failures, not a gate's: it has none.
   sendBack: {
     omatty: true,
-    terminal: false,
-    desktop: false,
+    herdr: false,
+    orca: false,
     claudeAgents: false,
   },
-  // "none of them has a review loop that sends comments back" (terminal
-  // managers); Orca annotates AI diffs; claude agents has no review loop.
-  review: { omatty: true, terminal: false, desktop: true, claudeAgents: false },
-  // Desktop apps: "Not reachable over SSH on a headless box".
-  ssh: { omatty: true, terminal: true, desktop: false, claudeAgents: true },
+  // herdr.md §6: herdr-reviewr anchors by line number ("No line-number
+  // rebasing"); orca.md: Orca anchors by lineNumber; agent view has no review
+  // loop. omatty: internal/review/anchor.go, invariant 7.
+  anchor: { omatty: true, herdr: false, orca: false, claudeAgents: false },
 };
