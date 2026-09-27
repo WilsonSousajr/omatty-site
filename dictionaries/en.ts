@@ -9,9 +9,9 @@
  */
 export const en = {
   meta: {
-    title: "omatty: know which agent got it right",
+    title: "omatty: an engineering workspace for Claude Code, in your terminal",
     description:
-      "A terminal ADE for parallel Claude Code sessions that runs your project's own check line in each session's worktree and puts the verdict on its card.",
+      "Parallel Claude Code sessions in live panes, with the file tree, the diff and your own checks beside each one, and your issues and pull requests in the same window. All in your terminal.",
   },
   nav: {
     home: "omatty, home",
@@ -29,8 +29,8 @@ export const en = {
     failed: "Select and copy",
   },
   hero: {
-    headline: "Run agents in parallel. Know which ones got it right.",
-    lead: "Starting parallel Claude Code sessions takes seconds. Checking their work is the bottleneck, and this terminal ADE is built for it.",
+    headline: "A real engineering workspace for Claude Code. In your terminal.",
+    lead: "Parallel Claude Code sessions in live panes, with the file tree, the diff and your own checks right beside them. Built for engineers who read the code before they ship it.",
     claim:
       "omatty runs your project's own check line inside each session's worktree and puts the verdict on the session's card.",
     source: "Read the source",
@@ -41,22 +41,22 @@ export const en = {
       "v{version}, pre-1.0. For macOS and Linux, with git and Claude Code.",
   },
   problem: {
-    title: "Five agents say they're done. Which ones are?",
+    title: "Your agents are in one place. Your engineering is everywhere else.",
     body: [
       "You already run Claude Code in parallel: a session per task, a worktree per session, often across more than one repository. Starting them takes seconds.",
-      "Then each one ends its turn and says the work is finished. Whether it ran your linter and your whole test suite, in its own worktree, against its own changes, you cannot tell from the summary.",
+      "Everything you need to judge their work lives somewhere else: panes in tmux, files in an editor, the diff in a git client, the tests in one more terminal per worktree, the pull request in a browser tab. The agents are fast. You are the one switching between all of it.",
     ],
   },
   implication: {
-    title: "Every unchecked session lands on you",
+    title: "What the switching costs you",
     items: [
+      {
+        title: "You lose the thread",
+        body: "Which worktree is this file in, and which session changed it? With four sessions running, every look starts with finding the right window.",
+      },
       {
         title: "You become the test runner",
         body: "Three worktrees means changing directory, running the suite and reading the output three times, and again after the next turn.",
-      },
-      {
-        title: "Failures surface late",
-        body: "What you do not check locally, CI finds minutes after the push, or a reviewer finds after that. By then the session has moved on.",
       },
       {
         title: "Every correction is retyped",
@@ -65,27 +65,31 @@ export const en = {
     ],
   },
   payoff: {
-    title: "What if every session checked its own work?",
-    body: "Picture each turn ending with your own fmt, lint and test line already run in that session's worktree, the verdict on its card, and the failures one key away from the session that caused them. You would open only the diffs worth reading.",
+    title: "What if the whole loop lived in one window?",
+    body: "Picture every session in a live pane, its files and its diff beside it, your own checks already run on its latest turn, and the failures one key away from the session that caused them. Nothing to switch to, and nothing that leaves your terminal.",
   },
   how: {
-    title: "That is what omatty does when a turn ends",
+    title: "One window, the whole engineering loop",
     steps: [
       {
-        title: "Claude works in its own worktree",
-        body: "Each session is the real claude binary in a pane you type into, in a directory of its own. Sessions from several repositories sit side by side in one window, and every key goes to Claude except the ctrl+o leader.",
+        title: "Claude works in live panes",
+        body: "Each session is the real claude binary in a pane you type into, in a worktree of its own, with sessions from several repositories side by side. The sidebar tells you which one is working, which is waiting for you and which is done, read from Claude's own hooks, never from the screen.",
       },
       {
-        title: "Your gate runs there",
-        body: "The fmt, vet, lint, test and coverage line your project already uses, run in that session's worktree: on one key, or on its own when a turn ends if you turn that on. omatty proposes the line from your repository, and nothing runs until you confirm it.",
+        title: "The file tree follows each session",
+        body: "ctrl+o f shows the worktree of the session you are on and moves with you to the next one. When Claude finishes a turn, the tree lists itself again and marks every file Claude added, changed or deleted, so you open the ones that matter. Mark a file read, and it tells you when it changes again.",
       },
       {
-        title: "The verdict lands on the card",
-        body: "One mark per step, and the name of the first step that did not pass. A step passes when its process exits 0; omatty never reads the output to decide.",
+        title: "Read the diff, and answer it",
+        body: "Everything the session changed, syntax-highlighted, with the lines no test covers marked. Comment on the lines you disagree with and send every comment back as one message. Comments anchor to a line's content, not its number, so they stay put while Claude edits the file.",
       },
       {
-        title: "The failure goes back with one key",
-        body: "S sends the failing output into the session that caused it. Read the diff, comment on the lines you disagree with, and send every comment back as one message. Comments anchor to a line's content, not its number, so they stay put while Claude edits the file.",
+        title: "Your gate runs on every session",
+        body: "The fmt, vet, lint, test and coverage line your project already uses, run in that session's worktree on one key, or on its own when a turn ends. One mark per step on the card, and a step passes only when its process exits 0. S sends the failing output back into the session that caused it.",
+      },
+      {
+        title: "Ship it, or take it back",
+        body: "ctrl+o p pushes and opens the pull request, or merges it when your gate and the forge's checks are both already green. ctrl+o u puts the worktree back to where the last turn began. ctrl+o i shows the project's issues and pull requests in the same column, and an issue can start a session of its own.",
       },
     ],
   },
@@ -220,7 +224,7 @@ export const en = {
     issue: "Open an issue",
   },
   footer: {
-    tagline: "A terminal ADE for parallel Claude Code sessions.",
+    tagline: "An engineering workspace for Claude Code, in your terminal.",
     changelog: "Changelog",
     comparison: "Comparison",
     roadmap: "Roadmap",
