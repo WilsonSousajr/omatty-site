@@ -6,12 +6,14 @@ import { Faq } from "@/components/Faq";
 import { Footer } from "@/components/Footer";
 import { HowItWorks } from "@/components/HowItWorks";
 import { KeyTable } from "@/components/KeyTable";
-import { Limits } from "@/components/Limits";
+import { Implication } from "@/components/Implication";
 import { Nav } from "@/components/Nav";
+import { Payoff } from "@/components/Payoff";
 import { Problem } from "@/components/Problem";
 import { WontDo } from "@/components/WontDo";
 import { en } from "@/dictionaries/en";
 import { pt } from "@/dictionaries/pt";
+import { verdicts } from "@/lib/comparison";
 import { INSTALL_CMD, ISSUES_NEW_URL, repoFile } from "@/lib/site";
 
 describe.each([
@@ -24,7 +26,8 @@ describe.each([
     ["KeyTable", () => <KeyTable dict={dict} />, dict.keys.title],
     ["WontDo", () => <WontDo dict={dict} />, dict.wontDo.title],
     ["Compare", () => <Compare dict={dict} />, dict.compare.title],
-    ["Limits", () => <Limits dict={dict} />, dict.limits.title],
+    ["Implication", () => <Implication dict={dict} />, dict.implication.title],
+    ["Payoff", () => <Payoff dict={dict} />, dict.payoff.title],
     ["Faq", () => <Faq dict={dict} />, dict.faq.title],
     ["ClosingCta", () => <ClosingCta dict={dict} />, dict.closing.title],
   ])("%s is a region named by its heading", (_name, element, title) => {
@@ -57,31 +60,60 @@ describe("KeyTable", () => {
 });
 
 describe("Compare", () => {
-  test("is a table with named columns, one row per place others are ahead", () => {
+  test("names every row's facts from lib/comparison, in both languages", () => {
+    for (const dict of [en, pt]) {
+      expect(dict.compare.rows.map((r) => r.id).sort()).toEqual(
+        Object.keys(verdicts).sort(),
+      );
+    }
+  });
+
+  test("is a table with one column per kind of tool and one row per need", () => {
     render(<Compare dict={en} />);
     const table = screen.getByRole("table");
-    expect(
-      within(table).getByRole("columnheader", { name: en.compare.headers.who }),
-    ).toBeTruthy();
+    expect(within(table).getAllByRole("columnheader")).toHaveLength(5);
     expect(within(table).getAllByRole("row")).toHaveLength(
       en.compare.rows.length + 1,
     );
   });
 
-  test("never breaks a product name at its hyphen, so claude-squad stays one word", () => {
+  test("marks each cell from the facts, readable as Yes or No", () => {
     render(<Compare dict={en} />);
-    const names = screen
-      .getAllByRole("rowheader")
-      .map((th) => th.textContent ?? "");
-    expect(names.some((n) => n.includes("claude\u2011squad"))).toBe(true);
-    expect(names.every((n) => !n.includes("-"))).toBe(true);
+    const gate = screen.getByRole("row", {
+      name: new RegExp(en.compare.rows[0]!.feature),
+    });
+    const cells = within(gate)
+      .getAllByRole("cell")
+      .map((c) => c.textContent);
+    expect(cells).toEqual(
+      ["Yes", "No", "No", "No"].map((v) => expect.stringContaining(v)),
+    );
   });
 
-  test("links to the full comparison and its sources", () => {
+  test("never breaks a product name at its hyphen, so claude-squad stays one word", () => {
     render(<Compare dict={en} />);
+    const header = screen.getByRole("columnheader", { name: /ccmanager/ });
+    expect(header.textContent).toContain("claude\u2011squad");
+    expect(header.textContent).not.toContain("claude-squad");
+  });
+
+  test("dates its claims and links to their sources", () => {
+    render(<Compare dict={en} />);
+    expect(screen.getByText(en.compare.asOf)).toBeInTheDocument();
     expect(screen.getByRole("link", { name: en.compare.more })).toHaveAttribute(
       "href",
       repoFile("docs/comparison.md"),
+    );
+  });
+});
+
+describe("Implication", () => {
+  test("lists what an unchecked session costs, unnumbered: they are not a sequence", () => {
+    render(<Implication dict={en} />);
+    const list = screen.getByRole("list");
+    expect(list.tagName).toBe("UL");
+    expect(within(list).getAllByRole("listitem")).toHaveLength(
+      en.implication.items.length,
     );
   });
 });

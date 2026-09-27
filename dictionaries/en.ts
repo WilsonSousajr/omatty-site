@@ -37,18 +37,39 @@ export const en = {
     recording: "A real omatty session",
     caption:
       "Real omatty v{version} running a real gate on two Go repositories: one session's tests fail, the failure goes back, and the fix goes green. The agent in each session is a scripted stand-in, so the recording is the same every time.",
-    status: "v{version}, pre-1.0, for macOS and Linux.",
+    status:
+      "v{version}, pre-1.0. For macOS and Linux, with git and Claude Code.",
   },
   problem: {
-    title:
-      "Starting three sessions is easy. Knowing which one to trust is not.",
+    title: "Five agents say they're done. Which ones are?",
     body: [
-      "Three sessions in three worktrees means three terminals, three diffs and three test runs, each started by hand after remembering which directory you are in.",
-      "The slow part is not the agents. It is finding out whether what came back is any good, and most tools for running agents in parallel are built to put more work in flight, not to help you judge it.",
+      "You already run Claude Code in parallel: a session per task, a worktree per session, often across more than one repository. Starting them takes seconds.",
+      "Then each one ends its turn and says the work is finished. Whether it ran your linter and your whole test suite, in its own worktree, against its own changes, you cannot tell from the summary.",
     ],
   },
+  implication: {
+    title: "Every unchecked session lands on you",
+    items: [
+      {
+        title: "You become the test runner",
+        body: "Three worktrees means changing directory, running the suite and reading the output three times, and again after the next turn.",
+      },
+      {
+        title: "Failures surface late",
+        body: "What you do not check locally, CI finds minutes after the push, or a reviewer finds after that. By then the session has moved on.",
+      },
+      {
+        title: "Every correction is retyped",
+        body: "Telling a session what broke means copying output, switching panes and explaining it again, while Claude keeps editing the file you are pointing at.",
+      },
+    ],
+  },
+  payoff: {
+    title: "What if every session checked its own work?",
+    body: "Picture each turn ending with your own fmt, lint and test line already run in that session's worktree, the verdict on its card, and the failures one key away from the session that caused them. You would open only the diffs worth reading.",
+  },
   how: {
-    title: "What happens when a turn ends",
+    title: "That is what omatty does when a turn ends",
     steps: [
       {
         title: "Claude works in its own worktree",
@@ -115,46 +136,41 @@ export const en = {
     link: "Why, feature by feature",
   },
   compare: {
-    title: "Where it stands",
+    title: "Built to judge the work, not just to run it",
     intro:
-      "Everything omatty does apart from the gate, someone else also does. Here is where others are ahead of it.",
-    headers: { who: "Who", what: "What omatty lacks" },
+      "Most tools for parallel agents are built to put more work in flight. omatty is built for what comes after: finding out which of it is good.",
+    headers: {
+      feature: "What you need",
+      omatty: "omatty",
+      terminal: "Terminal session managers",
+      terminalExamples: "claude-squad, ccmanager, fleet",
+      desktop: "Desktop agent apps",
+      desktopExamples: "Orca, Nimbalyst, Conductor",
+      claudeAgents: "claude agents",
+      claudeAgentsExamples: "built into Claude Code",
+    },
+    yes: "Yes",
+    no: "No",
     rows: [
       {
-        who: "ccmanager, claude-squad",
-        what: "More agents. omatty runs Claude Code today; a second agent, Codex, is in progress.",
+        feature: "Your own gate runs in each session's worktree",
+        id: "gate" as const,
       },
       {
-        who: "ccmanager",
-        what: "Windows. omatty builds for macOS and Linux only.",
+        feature: "Failures go back to the session with one key",
+        id: "sendBack" as const,
       },
       {
-        who: "claude-squad",
-        what: "A one-line installer. omatty has Homebrew, release archives and go install, but no install script and no apt, AUR or nix package.",
+        feature: "Review comments go back to the agent",
+        id: "review" as const,
       },
       {
-        who: "Orca",
-        what: "Scrollback after a reattach. omatty repaints the pane, and the history before it is lost.",
-      },
-      {
-        who: "lazygit, delta, difftastic",
-        what: "Diff rendering. They are better at it, by a wide margin.",
+        feature: "Works over SSH on a headless machine",
+        id: "ssh" as const,
       },
     ],
-    claudeAgents:
-      "Claude Code's own claude agents gives you one screen for your background sessions, free and in the box. If a session list is what you want, use it. Come to omatty for interactive panes, several repositories, a review loop, and a gate in each session's directory.",
-    lazygit:
-      "For one session in one repository, Claude in one pane and lazygit in another is largely enough. The case for omatty is several sessions across several repositories.",
-    more: "The full comparison, with its sources",
-  },
-  limits: {
-    title: "Before you install",
-    items: [
-      "Pre-1.0: keys, config and the state file can still change between minor releases.",
-      "macOS and Linux only. No Windows.",
-      "Claude Code only, today. A second agent, Codex, is in progress.",
-      "Needs git and claude. dtach and gh are optional: without dtach, quitting ends your sessions, and without gh the pull request and issue views are off.",
-    ],
+    asOf: "As of September 2026. Every cell is sourced in the full comparison.",
+    more: "Read the full comparison",
   },
   faq: {
     title: "Questions",
@@ -170,6 +186,14 @@ export const en = {
       {
         q: "Does it send anything anywhere?",
         a: "No. omatty talks to git, to claude and, if you install it, to gh. The two numbers it keeps about itself stay in ~/.omatty.",
+      },
+      {
+        q: "What do I need to run it?",
+        a: "macOS or Linux (no Windows yet), git and Claude Code. dtach is optional and keeps your sessions running when you quit; gh is optional and turns on pull requests and issues. omatty is pre-1.0, so keys and config can still change between minor releases.",
+      },
+      {
+        q: "Which agents does it run?",
+        a: "Claude Code today, as the real claude binary. A second agent, Codex, is in progress.",
       },
       {
         q: "What does it cost?",

@@ -230,6 +230,13 @@
 
 /* A phone gets the player's fixed readable size and scrolls instead. */
 @media (max-width: 40rem) {
+  /* The player is absolutely positioned over the poster, and an absolute box
+     escapes the frame's scroll container: at 120 columns it pushed the whole
+     page 180px wider than a phone (omatty#512). It scrolls inside itself. */
+  .cast-player > div:first-child {
+    overflow-x: auto;
+  }
+
   .cast-player__poster {
     aspect-ratio: auto;
     overflow-x: auto;
@@ -337,22 +344,45 @@
   white-space: nowrap;
 }
 
-/* Compare */
+/* Implication: three costs, side by side on a wide screen. */
+.costs {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 2rem;
+}
+
+.costs__item {
+  padding-top: 1rem;
+  border-top: 1px solid var(--color-hairline);
+}
+
+.costs__item p {
+  margin-top: 0.5rem;
+}
+
+/* Payoff: the question is the heading; the answer reads larger than body. */
+.payoff {
+  color: var(--color-ink);
+  font-size: var(--text-lead);
+  line-height: 1.5;
+}
+
+/* Compare: omatty's column is the one set in ink. */
 .compare__scroll {
-  margin: 2rem 0;
+  margin: 2rem 0 1rem;
   overflow-x: auto;
 }
 
 .compare {
   width: 100%;
-  max-width: 60rem;
+  min-width: 40rem;
   border-collapse: collapse;
   text-align: left;
 }
 
 .compare th,
 .compare td {
-  padding: 0.9rem 1.5rem 0.9rem 0;
+  padding: 0.9rem 1rem 0.9rem 0;
   border-bottom: 1px solid var(--color-hairline);
   vertical-align: top;
 }
@@ -363,31 +393,41 @@
   font-weight: 500;
 }
 
-.compare tbody th {
-  width: 34%;
+.compare__tool--omatty {
+  color: var(--color-ink) !important;
+  font-family: var(--font-display);
+  font-weight: 700 !important;
+}
+
+.compare__examples {
+  display: block;
+  margin-top: 0.2rem;
+  color: var(--color-muted);
+  font-weight: 400;
   hyphens: none;
+  opacity: 0.8;
+}
+
+.compare tbody th {
   color: var(--color-ink);
   font-weight: 600;
 }
 
-/* A product name is one word: "claude-squad" must not break at its hyphen.
-   On a phone the names may still wrap after a comma. */
-@media (min-width: 48rem) {
-  .compare tbody th {
-    width: auto;
-    min-width: 11rem;
-    white-space: nowrap;
-  }
+.compare__cell {
+  font-family: var(--font-display);
+  font-size: var(--text-lead);
 }
 
-/* Limits */
-.limits {
-  padding-left: 1.25rem;
-  list-style: disc;
+.compare__yes {
+  color: var(--color-ink);
 }
 
-.limits li::marker {
-  color: var(--color-muted);
+.compare__no {
+  color: var(--color-hairline);
+}
+
+.compare__cell--omatty .compare__yes {
+  color: var(--color-accent);
 }
 
 /* Faq: <details>, so the motion answers a click and nothing else. */
