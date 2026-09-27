@@ -54,6 +54,11 @@ describe.each([
     expect(hits).toEqual([]);
   });
 
+  test("uses no dashes as punctuation: no em dash, en dash or double hyphen", () => {
+    const hits = strings(dict).filter(({ text }) => /—|–|--/.test(text));
+    expect(hits).toEqual([]);
+  });
+
   test("mentions Windows only to say omatty does not run on it", () => {
     const negative =
       /no windows|sem windows|macos and linux only|apenas (para )?macos e linux/i;

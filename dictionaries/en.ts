@@ -9,7 +9,7 @@
  */
 export const en = {
   meta: {
-    title: "omatty — know which agent got it right",
+    title: "omatty: know which agent got it right",
     description:
       "A terminal ADE for parallel Claude Code sessions that runs your project's own check line in each session's worktree and puts the verdict on its card.",
   },
@@ -102,8 +102,8 @@ export const en = {
         text: "It is a terminal program, so it works over SSH on a headless machine. With dtach installed, quitting detaches instead of ending your sessions.",
       },
       {
-        key: "omatty gate --stats",
-        text: "Lead time, and how often the gate passes first time. omatty keeps no other numbers about itself, and these stay on your machine.",
+        key: "omatty gate",
+        text: "Shows a project's gate, or proposes one from the repository and runs nothing until you confirm. It also reports lead time and how often the gate passes first time, and those numbers never leave your machine.",
       },
     ],
     footprint:
@@ -177,7 +177,7 @@ export const en = {
       },
       {
         q: "Does it change my Claude Code setup?",
-        a: "No. It never writes ~/.claude/settings.json. Its hooks are passed with --settings to each session it starts, so running omatty leaves no trace in your Claude configuration.",
+        a: "No. It never writes ~/.claude/settings.json. Its hooks are handed to each session it starts, on that session's command line, so running omatty leaves no trace in your Claude configuration.",
       },
       {
         q: "What if my project has no gate yet?",
