@@ -230,13 +230,6 @@
 
 /* A phone gets the player's fixed readable size and scrolls instead. */
 @media (max-width: 40rem) {
-  /* The player is absolutely positioned over the poster, and an absolute box
-     escapes the frame's scroll container: at 120 columns it pushed the whole
-     page 180px wider than a phone (omatty#512). It scrolls inside itself. */
-  .cast-player > div:first-child {
-    overflow-x: auto;
-  }
-
   .cast-player__poster {
     aspect-ratio: auto;
     overflow-x: auto;
@@ -369,6 +362,10 @@
 
 /* Compare: omatty's column is the one set in ink. */
 .compare__scroll {
+  /* Positioned, so the cells' sr-only Yes and No (position: absolute) stay
+     inside this scroll box; unpositioned, they widened a phone's whole page
+     to 573px (omatty#512). */
+  position: relative;
   margin: 2rem 0 1rem;
   overflow-x: auto;
 }
@@ -405,7 +402,6 @@
   color: var(--color-muted);
   font-weight: 400;
   hyphens: none;
-  opacity: 0.8;
 }
 
 .compare tbody th {

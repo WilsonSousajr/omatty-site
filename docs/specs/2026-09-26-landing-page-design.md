@@ -24,7 +24,7 @@ This rule is binding and is enforced by a test.
 - **The one claim:** _omatty runs your project's own check line inside each session's worktree and puts the verdict on the session's card._
 - **The frame:** other tools optimise how much agent work is in flight; omatty optimises how quickly you can tell whether what came back is any good.
 - **Never on the page:** "the only tool…", "~150 orchestrators", any install method that doesn't exist, or "`claude agents` doesn't do this". The honest line about `claude agents` is that it doesn't run your verification in each session's directory.
-- **Limits stated on the page itself:** pre-1.0; macOS and Linux only, no Windows; Claude, with Codex only half-spiked; `dtach` and `gh` optional.
+- **Limits are findable, not featured** (revised 2026-09-26 at the maintainer's request): one line by the install command, the rest in the FAQ.
 
 ## Repo layout (`~/Projects/omatty-site`)
 
@@ -41,7 +41,7 @@ lib/site.ts                  # SITE_URL (env NEXT_PUBLIC_SITE_URL, default https
 lib/i18n.ts                  # locales, getDictionary(lang)
 dictionaries/en.ts pt.ts     # pt typed `satisfies Dictionary` from en; every string lives here
 components/                  # one file per section + primitives
-  Nav Hero Problem HowItWorks Features WontDo Compare Limits Faq ClosingCta Footer
+  Nav Hero Problem Implication Payoff HowItWorks KeyTable Compare WontDo Faq ClosingCta Footer
   CopyCommand TerminalFrame CastPlayer(client, dynamic import) LangSwitch
 public/casts/hero.cast  public/casts/step-*.cast
 scripts/demo/                # reproducible recording setup (see Recording)
@@ -139,6 +139,8 @@ Each tool's config asserts itself, following omatty's `TestDepguard_ExecAllowlis
 - **Mobile:** works at 360px. The player scales as text, and on narrow screens it falls back to a poster frame with a tap-to-play control.
 
 ## Page sections
+
+> **Revised 2026-09-26** at the maintainer's request ("this landing page must have a selling pitch", then "use SPIN selling"). The order is now: Hero, Problem (Situation and Problem), Implication, Payoff (Need-payoff), How it works, Keys, Compare, What it won't do, FAQ, Install. Compare is a table omatty wins, sourced cell by cell from `docs/comparison.md` and dated; the "where others are ahead" rows and the Limits section are gone. The list below is the original design, kept for the record.
 
 All copy comes from the dictionaries.
 
