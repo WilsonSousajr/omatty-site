@@ -6,8 +6,10 @@ import { CastPlayer } from "./CastPlayer";
 import { CopyCommand } from "./CopyCommand";
 import { TerminalFrame } from "./TerminalFrame";
 
-// Both verdicts on screen, and the failure in the gate pane (make-hero.sh).
-const posterAt = 17;
+// Both cards READY, and the sent review comment still on its line after
+// Claude inserted three above it. On the player's timeline, where idle gaps
+// are capped at 1.5s; make-hero.sh's poster_at is the same frame in raw time.
+const posterAt = 57;
 
 /**
  * The first screen: what omatty is for, the one claim it makes, and the

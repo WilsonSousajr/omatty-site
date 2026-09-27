@@ -31,7 +31,12 @@ describe("Hero", () => {
     render(<Hero dict={en} />);
     const frame = screen.getByRole("figure", { name: en.hero.recording });
     expect(frame).toHaveTextContent("READY");
-    expect(screen.getByText(/scripted stand-in/)).toBeInTheDocument();
+    // omatty#556: the agent on screen is the real Claude Code, and the caption
+    // says which parts were scripted (the keys and the two prompts).
+    expect(screen.getByText(/real Claude Code/)).toBeInTheDocument();
+    expect(
+      screen.getByText(/keys and the two prompts are scripted/),
+    ).toBeInTheDocument();
   });
 
   test("links to the source", () => {

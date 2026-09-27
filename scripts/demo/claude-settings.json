@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit",
+      "Write",
+      "MultiEdit",
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash(go:*)",
+      "Bash(gofmt:*)",
+      "Bash(ls:*)"
+    ]
+  }
+}

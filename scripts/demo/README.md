@@ -1,49 +1,51 @@
 # The hero recording
 
-`public/casts/hero.cast` is the real omatty binary, recorded in a real PTY.
-Everything on screen that belongs to omatty is real: the cards, the gate, its
-verdicts, the failure it sends back, and the diff. The `go vet` and
-`go test` runs are real too.
+`public/casts/hero.cast` is the real omatty binary running the real Claude
+Code, recorded in a real PTY. Everything on screen is real: the two Claude
+sessions and their work, the file tree and its change marks, the gate and its
+verdicts, the diff, and the review comment Claude acts on. What is scripted is
+the keys omatty is sent and the two prompts typed into Claude. The caption
+under the recording says so (omatty#556).
 
-The agent in each session is **not** Claude. It is `stand-in-agent`, a
-scripted stand-in that edits the worktree from `patches/` and reports its
-turns through `omatty hook`, the same way claude does. Its first line on screen
-says so, and so does the caption under the recording. A scripted agent makes
-the recording the same every time and costs nothing to redo.
+A real turn takes as long as it takes, so the recording is never the same
+twice, and each take spends real Claude turns (about four).
 
 ## Make it
 
 ```bash
-OMATTY_REPO=~/src/omatty scripts/demo/make-hero.sh
+claude setup-token                       # once; save the token it prints:
+pbpaste > ~/.omatty-demo-token && chmod 600 ~/.omatty-demo-token
+OMATTY_REPO=~/src/omatty DEMO_TOKEN_FILE=~/.omatty-demo-token scripts/demo/make-hero.sh
 ```
 
-This needs `omatty`, `go` and `python3` on `PATH`. `OMATTY_REPO` is a checkout
-of omatty, used for `testdata/screen`, which renders the text poster
-(`public/casts/hero.txt`) from the cast. The script:
+This needs `omatty`, `claude`, `go` and `python3` on `PATH`. Record with a
+released omatty binary, so the version it shows is a real one. `OMATTY_REPO`
+is a checkout of omatty, used for `testdata/screen`, which renders the text
+poster (`public/casts/hero.txt`) from the cast. The script:
 
-1. `setup.sh /tmp/omd` builds a scratch `HOME`: two Go repositories (`repos/`),
-   a worktree session in each, a confirmed gate per project, and a config
-   that turns on `gate.auto` and starts the stand-in as `claude_bin`.
-2. `record.py` runs omatty at 120×30, presses the keys in its `KEYS` schedule,
-   and writes asciicast v2 with a timestamp on every byte.
-3. It refuses the cast if it contains a local path or your user name
+1. `setup.sh /tmp/omd` builds a scratch `HOME`: two Go repositories
+   (`repos/`), each with `claude-settings.json` committed as its
+   `.claude/settings.json` so edits and `go` commands need no approval; a
+   worktree session in each; a confirmed gate per project; `gate.auto` on;
+   and Claude's first-run screens answered in `.claude.json`.
+2. `record.py` runs omatty at 120×30 and plays `story()`. Each step waits for
+   an event rather than a clock: with `gate.auto` on the gate runs when a turn
+   ends, and `state.json` counts those runs per project. The token reaches
+   Claude as `CLAUDE_CODE_OAUTH_TOKEN` and never the screen.
+3. It refuses the cast if it contains a local path, your user name or a token
    (AGENTS.md, "Security considerations").
 4. It renders the frame at `poster_at` seconds as the text poster.
 
+Then read the cast yourself before committing it: a real Claude session prints
+whatever it prints.
+
 ## Change it
 
-- **What happens:** `stand-in-agent` and `patches/<branch>/<step>/`.
-  `patches/quoted-fields/1` is the attempt whose test fails;
-  `patches/quoted-fields/2` is the fix.
-- **When keys are pressed:** `KEYS` in `record.py`.
-- **The poster frame:** `poster_at` in `make-hero.sh`, and `posterAt` in
-  `components/Hero.tsx`. The two must agree.
+- **What happens:** `story()`, `LEDGER_TASK`, `PARSER_TASK` and `REVIEW_NOTE`
+  in `record.py`.
+- **The poster frame:** `poster_at` in `make-hero.sh` is raw cast time;
+  `posterAt` in `components/Hero.tsx` is the same frame on the player's
+  timeline, where idle gaps are capped at 1.5 s. Re-derive both from a new take.
 
-Never edit a cast by hand (AGENTS.md, invariant 4). Re-record it.
-
-## Recording with the real Claude Code
-
-The same scratch `HOME` works with real `claude`: drop `claude_bin` from
-`/tmp/omd/.omatty/config.toml`, run `HOME=/tmp/omd omatty`, and record with
-`asciinema rec`. That recording costs a real turn per session, and it will be
-different every time. Read it for paths and prompts before committing it.
+Never edit a cast by hand (AGENTS.md, invariant 4). Re-record it. Revoke the
+token in your Claude account when you are done recording.

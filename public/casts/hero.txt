@@ -1,30 +1,30 @@
- projects · 2              │ parser ▎ quoted fields · quoted-fields · ✓ done <1m    │ gate · 1 failing · 2 passed · 3/3
-───────────────────────────┼────────────────────────────────────────────────────────┼─ gate ───────────────────────────×
- ledger                    │stand-in agent, scripted for this demo                  │  ✓ fmt      0.0s $ test -z "$(gofm
- ✓ round to cents      <1m │                                                        │  ✓ vet      0.1s $ go vet ./...
-   round-to-cents   +11 −2 │task: a comma inside double quotes belongs to the field │  ✗ test     0.3s $ go test ./...
-   ✓✓✓  READY              │tracking whether the scanner is inside quotes           │      --- FAIL:
- parser                    │adding a test for a,"b,c",d                             │      TestFieldsQuotedComma (0.00s)
-▎✓ quoted fields       <1m │  wrote fields_test.go fields.go                        │          fields_test.go:18: Fields
-▎  quoted-fields    +21 −4 │                                                        │      = ["a" "\"b,c\"" "d"], want
-▎  ✓✓✗  test               │                                                        │      ["a" "b,c" "d"]
-                           │                                                        │      FAIL
-                           │                                                        │      FAIL    example.com/parser
-                           │                                                        │      0.182s
-                           │                                                        │      FAIL
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
-                           │                                                        │
- j/k move  enter output  S send  r rerun  / search  esc back  ctrl+o ? keys                                   2 sessions
+ projects · 2               │ parser ▎ quoted fields · quoted-fields · ✓ done <1m   │ diff · 2 files · 0 comments
+────────────────────────────┼───────────────────────────────────────────────────────┼─ diff ───────────────────────────×
+  ▾ ledger                  │  ⎿  Added 7 lines                                     │ fields.go +25 -4 1/2
+  ✓ round to cents      <1m │      18      t.Fatalf("Fields = %q, want %q", g       │ @@ -1,9 +1,30 @@
+    round-to-cents   +10 −2 │          ot, want)                                    │  // Package parser reads comma-sep
+    ✓✓✓  READY              │      19    }                                          │  package parser
+  ▾ parser                  │      20  }                                            │
+▎ ✓ quoted fields       <1m │      21 +                                             │ -import "strings"
+▎   quoted-fields    +39 −4 │      22 +func TestFieldsEscapedQuote(t *testing       │ -
+▎   ✓✓✓  READY              │         +.T) {                                        │ -// Fields splits one CSV line int
+                            │      23 +  got := Fields(`a,"b""c",d`)                │ +// Fields splits one CSV line int
+                            │      24 +  if want := []string{"a", `b"c`, "d"}       │ +// double-quoted field is kept as
+                            │         +; !reflect.DeepEqual(got, want) {            │ +// themselves are dropped.
+                            │      25 +    t.Fatalf("Fields = %q, want %q", g       │  func Fields(line string) []string
+                            │         +ot, want)                                    │ -    return strings.Split(line, ",
+                            │      26 +  }                                          │ +    var fields []string
+                            │      27 +}                                            │ +    var field []byte
+                            │                                                       │ +    inQuotes := false
+                            │⏺ Added doubled-quote handling: "" inside a quoted     │ +
+                            │  field now emits a literal " instead of toggling quote│ +    for i := 0; i < len(line); i+
+                            │  state (fields.go:15-17), and added                   │ +        c := line[i]
+                            │  TestFieldsEscapedQuote for a,"b""c",d → b"c.         │ +        switch {
+                            │                                                       │ +        case c == '"' && inQuotes
+                            │✻ Sautéed for 12s · done 12:28 PM                      │ +            field = append(field,
+                            │                                                       │ +            i++
+                            │───────────────────────────────────────────────────────│ +        case c == '"':
+                            │❯                                                      │   >> (sent 12:27) Handle a doubled
+                            │───────────────────────────────────────────────────────│ +            inQuotes = !inQuotes
+                            │  ⏵⏵ auto mode on (shift+tab to cycle) · ← for agents  │ +        case c == ',' && !inQuote
+ ctrl+o q quit  ctrl+o ? keys  ctrl+o j/k switch  ctrl+o n new  ctrl+o d diff                                 2 sessions

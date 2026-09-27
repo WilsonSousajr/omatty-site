@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # Builds the throwaway world the hero recording is made in: a scratch HOME
 # with two real Go repositories, a worktree session in each, a confirmed gate
-# per project, and omatty configured to start the stand-in agent.
+# per project, and the real Claude Code ready to start in both without a
+# first-run screen or a permission prompt.
 #
 #   scripts/demo/setup.sh /tmp/omd
 #
@@ -18,6 +19,9 @@ git_q() { git -c user.name=demo -c user.email=demo@example.com -c init.defaultBr
 make_repo() { # project branch
   local root="$H/src/$1" wt="$H/.omatty/wt/$1/$2"
   cp -R "$here/repos/$1" "$root"
+  # Committed with the project, so it is in every worktree and never in a
+  # session's diff: edits and go commands need no approval.
+  mkdir -p "$root/.claude" && cp "$here/claude-settings.json" "$root/.claude/settings.json"
   git_q -C "$root" init && git_q -C "$root" add -A && git_q -C "$root" commit -m "initial"
   mkdir -p "$(dirname "$wt")" && git_q -C "$root" worktree add -b "$2" "$wt" main
   # Warm the build cache, so the recorded gate runs at the speed it would on
@@ -40,12 +44,24 @@ cat > "$H/.omatty/state.json" <<JSON
 JSON
 
 cat > "$H/.omatty/config.toml" <<TOML
-claude_bin = "$here/stand-in-agent"
-
 [gate]
 auto = true
 
 [sessions]
 lazy_start = false
 TOML
+
+# Claude Code's own first-run screens (theme, trust this folder) would sit in
+# the panes instead of the work. A fresh HOME has never seen them, so answer
+# them here, for these two projects only. Claude keys trust on the main
+# checkout a worktree belongs to, with symlinks resolved (/tmp is
+# /private/tmp on macOS), so both spellings are listed.
+real="$(cd "$H" && pwd -P)"
+trust='{"hasTrustDialogAccepted": true}'
+cat > "$H/.claude.json" <<JSON
+{"hasCompletedOnboarding": true, "theme": "dark",
+ "projects": {
+  "$H/src/ledger": $trust, "$real/src/ledger": $trust,
+  "$H/src/parser": $trust, "$real/src/parser": $trust}}
+JSON
 echo "demo home ready: $H"
