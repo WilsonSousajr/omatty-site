@@ -86,3 +86,20 @@ test("an FAQ answer opens without JavaScript", async ({ browser }) => {
   await expect(page.getByText(/gratuito e tem licença MIT/)).toBeVisible();
   await context.close();
 });
+
+test("the page never scrolls sideways, on any screen (omatty#512)", async ({
+  page,
+}) => {
+  // Measured against the screen Playwright was configured with, not
+  // window.innerWidth: an emulated phone widens its layout viewport to fit
+  // overflowing content, so innerWidth grows with the very bug under test.
+  const screenWidth = page.viewportSize()?.width ?? 0;
+  for (const lang of ["en", "pt"]) {
+    await page.goto(`/${lang}`);
+    await page.locator(".ap-player").waitFor();
+    const scroll = await page.evaluate(
+      () => document.documentElement.scrollWidth,
+    );
+    expect(scroll).toBeLessThanOrEqual(screenWidth);
+  }
+});

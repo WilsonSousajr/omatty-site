@@ -18,10 +18,12 @@ describe("Hero", () => {
     expect(screen.getByText(INSTALL_CMD)).toBeInTheDocument();
   });
 
-  test("states the version and the limits beside the install command (invariant 3)", () => {
+  test("states the version and what it runs on beside the install command (invariant 3)", () => {
     render(<Hero dict={en} />);
     expect(
-      screen.getByText(`v${VERSION}, pre-1.0, for macOS and Linux.`),
+      screen.getByText(
+        `v${VERSION}, pre-1.0. For macOS and Linux, with git and Claude Code.`,
+      ),
     ).toBeInTheDocument();
   });
 

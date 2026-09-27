@@ -25,6 +25,16 @@ to move a stranger from reading, to `brew install`, to opening an issue.
 Anything that doesn't serve that is cut. There are no testimonials we don't
 have, no star counter, no email capture and no docs site.
 
+**The page sells.** It is a pitch, not an evaluation: that is what omatty's
+own `docs/comparison.md` is for, and the page links to it. The sections
+follow SPIN (Situation, Problem, Implication, Need-payoff): the parallel
+sessions a reader already runs, the question of which ones to trust, what an
+unchecked session costs them, the outcome asked as a question, and only then
+the answer, its proof and the install command. The page does not list where
+other tools are ahead, and it does not lead with caveats. It still never says
+anything false (invariants 1 and 2): a pitch someone can disprove in a minute
+costs more than it earns.
+
 - **Two pages from one component tree:** `/en` and `/pt`, pre-rendered at
   build time by Next.js and served by Vercel. `/` redirects by
   `Accept-Language`.
@@ -182,9 +192,10 @@ here passes on a page that says something false.
 
    `tests/claims.test.ts` fails on each of these, in both dictionaries.
 
-3. **The limits are on the page, not in a reply after someone finds them:**
-   pre-1.0, macOS and Linux only (no Windows), Claude Code with Codex only
-   half-spiked, and `dtach` and `gh` optional.
+3. **The limits are findable, not featured.** One line beside the install
+   command says the version, pre-1.0, and what omatty runs on; the FAQ says
+   the rest (no Windows, Claude Code only today, `dtach` and `gh` optional).
+   Nothing about them may be false or hidden, but they are not a section.
 4. **Every frame of the hero is real omatty output.** Casts are recorded from
    the real binary (`scripts/demo/`). Never hand-edit a cast's content beyond
    trimming idle time, and never draw a mock-up of the TUI and present it as
@@ -269,8 +280,9 @@ commit message and explain why.
   implements, including the section list and the visual system.
 - omatty's `docs/announcement.md`: the claim, the banned claims and the
   venues.
-- omatty's `docs/comparison.md`: the fair comparison the Compare section
-  condenses, including where others are ahead.
+- omatty's `docs/comparison.md`: the source of every cell in the Compare
+  table, whose facts live in `lib/comparison.ts`. A row that cannot be sourced
+  for every column is not a row.
 - `scripts/demo/README.md`: how the hero recording is made.
 
 <!-- ai-memory:start -->

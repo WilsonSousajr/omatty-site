@@ -11,7 +11,7 @@ const posterAt = 17;
 
 /**
  * The first screen: what omatty is for, the one claim it makes, and the
- * command that installs it, with the limits stated right beside it.
+ * command that installs it, with what it runs on stated right beside it.
  */
 export function Hero({ dict }: { dict: Dictionary }) {
   return (
