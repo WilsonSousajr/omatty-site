@@ -1,4 +1,5 @@
 import { expect, test } from "@playwright/test";
+import { createHash } from "node:crypto";
 
 const install = "brew install WilsonSousajr/tap/omatty";
 
@@ -102,4 +103,27 @@ test("the page never scrolls sideways, on any screen (omatty#512)", async ({
     );
     expect(scroll).toBeLessThanOrEqual(screenWidth);
   }
+});
+
+// omatty#561: the tab showed Next.js's own favicon, not omatty's mark.
+const nextDefaultFavicon = "c30c7d42707a47a3f4591831641e50dc";
+
+test("the tab and the home screen show omatty's mark, not Next.js's (omatty#561)", async ({
+  page,
+  request,
+}) => {
+  await page.goto("/en");
+  const head = page.locator("head");
+  const svg = head.locator('link[rel="icon"][type="image/svg+xml"]');
+  const apple = head.locator('link[rel="apple-touch-icon"]');
+  await expect(svg).toHaveCount(1);
+  await expect(apple).toHaveCount(1);
+  for (const link of [svg, apple]) {
+    const href = await link.getAttribute("href");
+    expect((await request.get(href ?? "")).ok()).toBe(true);
+  }
+  const ico = await (await request.get("/favicon.ico")).body();
+  expect(createHash("md5").update(ico).digest("hex")).not.toBe(
+    nextDefaultFavicon,
+  );
 });
