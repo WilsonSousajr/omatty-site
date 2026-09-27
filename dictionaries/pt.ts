@@ -36,7 +36,7 @@ export const pt = {
     source: "Ler o código",
     recording: "Uma sessão real do omatty",
     caption:
-      "O omatty v{version} de verdade, rodando um gate de verdade em dois repositórios Go: os testes de uma sessão falham, a falha volta para ela e a correção fica verde. O agente de cada sessão é um substituto roteirizado, para a gravação ser sempre igual.",
+      "O omatty v{version} de verdade e o Claude Code de verdade, em dois repositórios Go: as duas sessões trabalham ao mesmo tempo, a árvore marca o que mudou, o gate cai no card de cada uma, e um comentário de revisão volta e fica na linha certa enquanto o Claude edita. As teclas e os dois prompts são roteirizados; o resto não. As esperas longas são encurtadas na reprodução.",
     status: "v{version}, pré-1.0. Para macOS e Linux, com git e Claude Code.",
   },
   problem: {
