@@ -7,9 +7,10 @@ import type { Dictionary } from "./en";
  */
 export const pt = {
   meta: {
-    title: "omatty: saiba qual agente acertou",
+    title:
+      "omatty: um ambiente de engenharia para o Claude Code, no seu terminal",
     description:
-      "Um ADE de terminal para sessões paralelas do Claude Code que roda a linha de verificação do seu próprio projeto na worktree de cada sessão e coloca o veredito no card dela.",
+      "Sessões paralelas do Claude Code em painéis ao vivo, com a árvore de arquivos, o diff e as suas próprias verificações ao lado de cada uma, e as suas issues e pull requests na mesma janela. Tudo no seu terminal.",
   },
   nav: {
     home: "omatty, início",
@@ -27,8 +28,9 @@ export const pt = {
     failed: "Selecione e copie",
   },
   hero: {
-    headline: "Rode agentes em paralelo. Saiba quais acertaram.",
-    lead: "Um ADE de terminal para sessões paralelas do Claude Code, em todos os repositórios em que você trabalha.",
+    headline:
+      "Um ambiente de engenharia de verdade para o Claude Code. No seu terminal.",
+    lead: "Sessões paralelas do Claude Code em painéis ao vivo, com a árvore de arquivos, o diff e as suas próprias verificações logo ao lado. Feito para engenheiros que leem o código antes de entregar.",
     claim:
       "O omatty roda a linha de verificação do próprio projeto dentro da worktree de cada sessão e coloca o veredito no card da sessão.",
     source: "Ler o código",
@@ -38,51 +40,56 @@ export const pt = {
     status: "v{version}, pré-1.0. Para macOS e Linux, com git e Claude Code.",
   },
   problem: {
-    title: "Cinco agentes dizem que terminaram. Quais terminaram mesmo?",
+    title:
+      "Os seus agentes estão num lugar. A sua engenharia está em todo o resto.",
     body: [
       "Você já roda o Claude Code em paralelo: uma sessão por tarefa, uma worktree por sessão, muitas vezes em mais de um repositório. Abrir todas leva segundos.",
-      "Aí cada uma termina o turno e diz que o trabalho está pronto. Se ela rodou o seu linter e a sua suíte de testes inteira, na própria worktree, contra as próprias mudanças, o resumo não diz.",
+      "Tudo o que você precisa para julgar o trabalho delas mora em outro lugar: os painéis no tmux, os arquivos num editor, o diff num cliente git, os testes em mais um terminal por worktree, o pull request numa aba do navegador. Os agentes são rápidos. Você fica trocando de janela.",
     ],
   },
   implication: {
-    title: "Cada sessão sem verificação cai no seu colo",
+    title: "O que essa troca de janelas custa",
     items: [
       {
-        title: "Você vira o executor de testes",
-        body: "Três worktrees são três vezes trocar de diretório, rodar a suíte e ler a saída, e de novo depois do próximo turno.",
+        title: "Você perde o fio",
+        body: "Em qual worktree está este arquivo, e qual sessão mexeu nele? Com quatro sessões rodando, toda olhada começa procurando a janela certa.",
       },
       {
-        title: "As falhas aparecem tarde",
-        body: "O que você não verifica localmente, o CI encontra minutos depois do push, ou um revisor encontra depois disso. Aí a sessão já seguiu em frente.",
+        title: "Você vira o executor de testes",
+        body: "Três worktrees significam entrar no diretório, rodar a suíte e ler a saída três vezes, e de novo depois do próximo turno.",
       },
       {
         title: "Toda correção é redigitada",
-        body: "Dizer a uma sessão o que quebrou é copiar a saída, trocar de painel e explicar tudo de novo, enquanto o Claude continua editando o arquivo que você está apontando.",
+        body: "Dizer a uma sessão o que quebrou significa copiar a saída, trocar de painel e explicar de novo, enquanto o Claude continua editando o arquivo que você está apontando.",
       },
     ],
   },
   payoff: {
-    title: "E se cada sessão verificasse o próprio trabalho?",
-    body: "Imagine cada turno terminando com a sua linha de fmt, lint e testes já rodada na worktree daquela sessão, o veredito no card dela e as falhas a uma tecla da sessão que as causou. Você abriria só os diffs que valem a leitura.",
+    title: "E se o ciclo inteiro coubesse numa janela só?",
+    body: "Imagine cada sessão num painel ao vivo, com os arquivos e o diff dela ao lado, as suas próprias verificações já rodadas no último turno, e as falhas a uma tecla da sessão que as causou. Nada para onde trocar, e nada que saia do seu terminal.",
   },
   how: {
-    title: "É isso que o omatty faz quando um turno termina",
+    title: "Uma janela, o ciclo de engenharia inteiro",
     steps: [
       {
-        title: "O Claude trabalha na própria worktree",
-        body: "Cada sessão é o binário claude de verdade, num painel em que você digita, num diretório só dela. Sessões de vários repositórios ficam lado a lado numa janela, e toda tecla vai para o Claude, menos o líder ctrl+o.",
+        title: "O Claude trabalha em painéis ao vivo",
+        body: "Cada sessão é o binário claude de verdade, num painel em que você digita, numa worktree só dela, com sessões de vários repositórios lado a lado. A barra lateral diz qual está trabalhando, qual espera por você e qual terminou, lido dos próprios hooks do Claude, nunca da tela.",
       },
       {
-        title: "O seu gate roda ali",
-        body: "A linha de fmt, vet, lint, testes e cobertura que o seu projeto já usa, rodando na worktree daquela sessão: com uma tecla, ou sozinha quando um turno termina, se você ligar isso. O omatty propõe a linha a partir do seu repositório, e nada roda antes de você confirmar.",
+        title: "A árvore de arquivos acompanha cada sessão",
+        body: "ctrl+o f mostra a worktree da sessão em que você está e vai com você para a próxima. Quando o Claude termina um turno, a árvore se lista de novo e marca cada arquivo que o Claude criou, mudou ou apagou, para você abrir os que importam. Marque um arquivo como lido, e ela avisa quando ele mudar de novo.",
       },
       {
-        title: "O veredito aparece no card",
-        body: "Uma marca por etapa, e o nome da primeira que não passou. Uma etapa passa quando o processo sai com 0; o omatty nunca lê a saída para decidir.",
+        title: "Leia o diff, e responda",
+        body: "Tudo o que a sessão mudou, com realce de sintaxe e as linhas que nenhum teste cobre marcadas. Comente nas linhas de que você discorda e mande todos os comentários de volta numa mensagem só. Os comentários se ancoram no conteúdo da linha, não no número, então ficam no lugar enquanto o Claude edita o arquivo.",
       },
       {
-        title: "A falha volta com uma tecla",
-        body: "S envia a saída da falha para a sessão que a causou. Leia o diff, comente as linhas de que discorda e mande todos os comentários de volta numa mensagem só. Os comentários se prendem ao conteúdo da linha, não ao número, e ficam no lugar enquanto o Claude edita o arquivo.",
+        title: "O seu gate roda em cada sessão",
+        body: "A linha de fmt, vet, lint, testes e cobertura que o seu projeto já usa, rodando na worktree daquela sessão com uma tecla, ou sozinha quando um turno termina. Uma marca por etapa no card, e uma etapa só passa quando o processo sai com 0. S manda a saída da falha de volta para a sessão que a causou.",
+      },
+      {
+        title: "Entregue, ou desfaça",
+        body: "ctrl+o p faz o push e abre o pull request, ou faz o merge quando o seu gate e os checks da forja já estão verdes. ctrl+o u põe a worktree de volta onde o último turno começou. ctrl+o i mostra as issues e os pull requests do projeto na mesma coluna, e uma issue pode abrir uma sessão só dela.",
       },
     ],
   },
@@ -139,10 +146,10 @@ export const pt = {
     headers: {
       feature: "O que você precisa",
       omatty: "omatty",
-      terminal: "Gerenciadores de sessão no terminal",
-      terminalExamples: "claude-squad, ccmanager, fleet",
-      desktop: "Apps de agentes para desktop",
-      desktopExamples: "Orca, Nimbalyst, Conductor",
+      herdr: "herdr",
+      herdrExamples: "com herdr-reviewr",
+      orca: "Orca",
+      orcaExamples: "app para desktop",
       claudeAgents: "claude agents",
       claudeAgentsExamples: "incluído no Claude Code",
     },
@@ -150,23 +157,21 @@ export const pt = {
     no: "Não",
     rows: [
       {
-        feature: "O seu próprio gate roda na worktree de cada sessão",
+        feature:
+          "A sua própria linha de verificação roda na worktree de cada sessão, com um veredito por etapa no cartão",
         id: "gate" as const,
       },
       {
-        feature: "As falhas voltam para a sessão com uma tecla",
+        feature: "As falhas do seu gate voltam para a sessão com uma tecla",
         id: "sendBack" as const,
       },
       {
-        feature: "Os comentários da revisão voltam para o agente",
-        id: "review" as const,
-      },
-      {
-        feature: "Funciona por SSH numa máquina sem tela",
-        id: "ssh" as const,
+        feature:
+          "Os comentários da revisão ficam na linha certa enquanto o Claude edita",
+        id: "anchor" as const,
       },
     ],
-    asOf: "Em setembro de 2026. Cada célula tem a fonte na comparação completa.",
+    asOf: "Em 27 de setembro de 2026. Cada célula tem a fonte na comparação completa.",
     more: "Ler a comparação completa",
   },
   faq: {
@@ -178,7 +183,11 @@ export const pt = {
       },
       {
         q: "Qual a diferença para o claude agents?",
-        a: "O claude agents lista as suas sessões em segundo plano, cada uma numa worktree, e é de graça e já vem incluído. Os painéis do omatty são interativos, abrangem vários repositórios e acrescentam um ciclo de revisão e um gate que roda no diretório de cada sessão.",
+        a: "O claude agents lista as suas sessões em segundo plano de todos os seus projetos, cada uma numa worktree, mostra os checks de cada pull request, e é de graça e já vem incluído. O omatty põe várias sessões ao vivo lado a lado, acrescenta um ciclo de revisão e roda a sua própria linha de verificação no diretório de cada sessão antes de qualquer push.",
+      },
+      {
+        q: "Qual a diferença para o herdr?",
+        a: "O herdr é um espaço de trabalho de terminal para muitos tipos de agente, e está à frente do omatty em amplitude: mais agentes, mais sistemas operacionais e várias máquinas numa janela. O omatty é mais estreito. Ele lê o estado do Claude a partir de hooks e transcrições, não da tela, nunca escreve nas suas configurações do Claude, mantém os comentários da revisão na linha certa enquanto o Claude edita e roda o seu gate em cada sessão.",
       },
       {
         q: "Ele envia alguma coisa para algum lugar?",
@@ -190,7 +199,7 @@ export const pt = {
       },
       {
         q: "Quais agentes ele roda?",
-        a: "O Claude Code hoje, como o binário claude de verdade. Um segundo agente, o Codex, está em andamento.",
+        a: "O Claude Code, como o binário claude de verdade. Outros agentes ainda não são suportados.",
       },
       {
         q: "Quanto custa?",
@@ -216,7 +225,7 @@ export const pt = {
     issue: "Abrir uma issue",
   },
   footer: {
-    tagline: "Um ADE de terminal para sessões paralelas do Claude Code.",
+    tagline: "Um ambiente de engenharia para o Claude Code, no seu terminal.",
     changelog: "Changelog",
     comparison: "Comparação",
     roadmap: "Roadmap",

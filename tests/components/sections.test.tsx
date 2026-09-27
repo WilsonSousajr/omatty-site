@@ -68,7 +68,17 @@ describe("Compare", () => {
     }
   });
 
-  test("is a table with one column per kind of tool and one row per need", () => {
+  test("names the tools it compares, each cell sourced, not a whole camp (omatty#515)", () => {
+    render(<Compare dict={en} />);
+    const names = screen
+      .getAllByRole("columnheader")
+      .map((h) => h.textContent ?? "");
+    expect(names.join(" ")).toMatch(/herdr/);
+    expect(names.join(" ")).toMatch(/Orca/);
+    expect(Object.keys(verdicts)).not.toContain("ssh");
+  });
+
+  test("is a table with one column per tool and one row per need", () => {
     render(<Compare dict={en} />);
     const table = screen.getByRole("table");
     expect(within(table).getAllByRole("columnheader")).toHaveLength(5);
@@ -90,11 +100,11 @@ describe("Compare", () => {
     );
   });
 
-  test("never breaks a product name at its hyphen, so claude-squad stays one word", () => {
+  test("never breaks a product name at its hyphen, so herdr-reviewr stays one word", () => {
     render(<Compare dict={en} />);
-    const header = screen.getByRole("columnheader", { name: /ccmanager/ });
-    expect(header.textContent).toContain("claude\u2011squad");
-    expect(header.textContent).not.toContain("claude-squad");
+    const header = screen.getByRole("columnheader", { name: /herdr/ });
+    expect(header.textContent).toContain("herdr\u2011reviewr");
+    expect(header.textContent).not.toContain("herdr-reviewr");
   });
 
   test("dates its claims and links to their sources", () => {
