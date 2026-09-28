@@ -1,6 +1,7 @@
 import { describe, expect, test } from "vitest";
 import { en } from "@/dictionaries/en";
 import { pt } from "@/dictionaries/pt";
+import { INSTALL_SCRIPT_CMD } from "@/lib/site";
 
 /**
  * AGENTS.md invariants 2 and 3, from omatty's docs/announcement.md, "What must
@@ -28,8 +29,8 @@ const banned: [string, RegExp][] = [
     /\b1[0-9]{2}\b|~\s*\d+|\bdozens of\b|\bdezenas de\b/i,
   ],
   [
-    "an install method that does not exist",
-    /curl[^|]*\|\s*(ba|z)?sh|\bapt(-get)? install\b|\bnix (profile|-env)\b|\b(yay|paru) -S\b/i,
+    "an install method that does not exist: a script other than omatty.com/install.sh, or a package (omatty#517)",
+    /curl(?![^|]*https:\/\/omatty\.com\/install\.sh)[^|]*\|\s*(ba|z)?sh|\bapt(-get)? install\b|\bnix (profile|-env)\b|\b(yay|paru) -S\b/i,
   ],
   [
     "a false claim about claude agents",
@@ -59,6 +60,14 @@ describe.each([
 ])("the %s page", (_lang, dict) => {
   test.each(banned)("makes no %s", (_what, pattern) => {
     const hits = strings(dict).filter(({ text }) => pattern.test(text));
+    expect(hits).toEqual([]);
+  });
+
+  test("pipes nothing into a shell but the exact one-line install (omatty#517)", () => {
+    const hits = strings(dict).filter(
+      ({ text }) =>
+        /\|\s*(ba|z)?sh\b/.test(text) && !text.includes(INSTALL_SCRIPT_CMD),
+    );
     expect(hits).toEqual([]);
   });
 

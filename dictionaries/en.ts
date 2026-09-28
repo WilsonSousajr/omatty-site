@@ -214,7 +214,7 @@ export const en = {
       },
       {
         q: "How do I install it without Homebrew?",
-        a: "Download a release archive for macOS or Linux (amd64 or arm64) and check it against checksums.txt, or build it with go install github.com/WilsonSousajr/omatty/cmd/omatty@latest.",
+        a: "Run curl -fsSL https://omatty.com/install.sh | sh. It downloads the release archive for your macOS or Linux machine (amd64 or arm64), refuses it unless it matches checksums.txt, and installs to ~/.local/bin without sudo; with Homebrew present it uses the tap instead. The script is scripts/install.sh in the repository, so you can read it first. Or build it with go install github.com/WilsonSousajr/omatty/cmd/omatty@latest.",
       },
     ],
   },

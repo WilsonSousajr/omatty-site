@@ -2,6 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
 import {
   INSTALL_CMD,
+  INSTALL_SCRIPT_CMD,
   ISSUES_NEW_URL,
   REPO_URL,
   SITE_URL,
@@ -16,6 +17,10 @@ const readme = readFileSync("tests/fixtures/omatty-README.md", "utf8");
 describe("the facts the page states", () => {
   test("the install command is the one omatty's README gives", () => {
     expect(readme).toContain(INSTALL_CMD);
+  });
+
+  test("the one-line install is the one omatty's README gives (omatty#517)", () => {
+    expect(readme).toContain(INSTALL_SCRIPT_CMD);
   });
 
   test("the version is the one omatty's README reports", () => {

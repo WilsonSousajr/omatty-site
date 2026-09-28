@@ -185,7 +185,10 @@ here passes on a page that says something false.
    - "the only tool that…", or any uniqueness claim beyond the one sanctioned
      sentence
    - "~150 orchestrators", or any unsourced count of the field
-   - any install method that doesn't exist: no `curl | sh`, no apt, AUR or nix
+   - any install method that doesn't exist: no apt, AUR or nix, and no
+     `curl | sh` but `curl -fsSL https://omatty.com/install.sh | sh`, which
+     exists because `next.config.ts` redirects `/install.sh` to omatty's own
+     `scripts/install.sh` on main (omatty#517)
    - "`claude agents` doesn't exist / doesn't do this". It exists and overlaps;
      the honest line is that it doesn't run your project's verification in each
      session's directory.

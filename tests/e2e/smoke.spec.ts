@@ -127,3 +127,15 @@ test("the tab and the home screen show omatty's mark, not Next.js's (omatty#561)
     nextDefaultFavicon,
   );
 });
+
+// omatty#517: the one-liner fetches omatty.com/install.sh, which is omatty's
+// own scripts/install.sh on main; the page never holds a copy of it.
+test("/install.sh redirects to omatty's install script on main (omatty#517)", async ({
+  request,
+}) => {
+  const res = await request.get("/install.sh", { maxRedirects: 0 });
+  expect(res.status()).toBe(307);
+  expect(res.headers()["location"]).toBe(
+    "https://raw.githubusercontent.com/WilsonSousajr/omatty/main/scripts/install.sh",
+  );
+});

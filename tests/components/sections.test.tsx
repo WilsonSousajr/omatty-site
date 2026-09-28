@@ -14,7 +14,12 @@ import { WontDo } from "@/components/WontDo";
 import { en } from "@/dictionaries/en";
 import { pt } from "@/dictionaries/pt";
 import { verdicts } from "@/lib/comparison";
-import { INSTALL_CMD, ISSUES_NEW_URL, repoFile } from "@/lib/site";
+import {
+  INSTALL_CMD,
+  INSTALL_SCRIPT_CMD,
+  ISSUES_NEW_URL,
+  repoFile,
+} from "@/lib/site";
 
 describe.each([
   ["en", en],
@@ -149,11 +154,12 @@ describe("Faq", () => {
 });
 
 describe("ClosingCta", () => {
-  test("is the install anchor, with the command and a way to report what broke", () => {
+  test("is the install anchor, with the commands and a way to report what broke", () => {
     render(<ClosingCta dict={en} />);
     expect(
       screen.getByRole("region", { name: en.closing.title }),
     ).toHaveAttribute("id", "install");
+    expect(screen.getByText(INSTALL_SCRIPT_CMD)).toBeInTheDocument();
     expect(screen.getByText(INSTALL_CMD)).toBeInTheDocument();
     expect(
       screen.getByRole("link", { name: en.closing.issue }),
