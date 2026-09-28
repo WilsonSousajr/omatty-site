@@ -4,9 +4,25 @@
  *
  *   <CopyCommand command={INSTALL_CMD} … />
  */
-export const VERSION = "0.7.0";
+export const VERSION = "0.8.1";
 
 export const INSTALL_CMD = "brew install WilsonSousajr/tap/omatty";
+
+/**
+ * The one-line install for any macOS or Linux machine (omatty#517). Always
+ * the production domain, never SITE_URL: a preview deployment still sends a
+ * visitor to omatty.com for the script.
+ */
+export const INSTALL_SCRIPT_CMD =
+  "curl -fsSL https://omatty.com/install.sh | sh";
+
+/**
+ * What omatty.com/install.sh redirects to (next.config.ts): omatty's own
+ * scripts/install.sh on main, versioned with the release, so the script never
+ * needs a site change.
+ */
+export const INSTALL_SCRIPT_SOURCE =
+  "https://raw.githubusercontent.com/WilsonSousajr/omatty/main/scripts/install.sh";
 
 export const REPO_URL = "https://github.com/WilsonSousajr/omatty";
 
