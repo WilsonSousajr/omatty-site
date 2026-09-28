@@ -3,7 +3,7 @@ import { describe, expect, test, vi } from "vitest";
 import { Hero } from "@/components/Hero";
 import { Nav } from "@/components/Nav";
 import { en } from "@/dictionaries/en";
-import { INSTALL_CMD, REPO_URL, VERSION } from "@/lib/site";
+import { INSTALL_CMD, INSTALL_SCRIPT_CMD, REPO_URL, VERSION } from "@/lib/site";
 
 // The player is CastPlayer's subject, not the hero's.
 vi.mock("asciinema-player", () => ({ create: () => ({ dispose() {} }) }));
@@ -15,7 +15,15 @@ describe("Hero", () => {
       en.hero.headline,
     );
     expect(screen.getByText(en.hero.claim)).toBeInTheDocument();
-    expect(screen.getByText(INSTALL_CMD)).toBeInTheDocument();
+    expect(screen.getByText(INSTALL_SCRIPT_CMD)).toBeInTheDocument();
+  });
+
+  // omatty#570: brew does nothing on a Linux machine without Homebrew, and
+  // the one-liner hands off to the tap itself where brew is present, so the
+  // first screen offers one command that works everywhere omatty runs.
+  test("offers only the one-line install, not brew (omatty#570)", () => {
+    render(<Hero dict={en} />);
+    expect(screen.queryByText(INSTALL_CMD)).not.toBeInTheDocument();
   });
 
   test("states the version and what it runs on beside the install command (invariant 3)", () => {
