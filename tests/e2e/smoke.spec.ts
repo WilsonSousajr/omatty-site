@@ -1,7 +1,8 @@
 import { expect, test } from "@playwright/test";
 import { createHash } from "node:crypto";
 
-const install = "brew install WilsonSousajr/tap/omatty";
+// The hero's command, the first copy button on the page (omatty#570).
+const install = "curl -fsSL https://omatty.com/install.sh | sh";
 
 test("each language renders without console errors", async ({ page }) => {
   const errors: string[] = [];

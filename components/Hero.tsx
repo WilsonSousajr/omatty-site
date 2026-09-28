@@ -1,6 +1,6 @@
 import type { Dictionary } from "@/dictionaries/en";
 import { fill } from "@/lib/i18n";
-import { INSTALL_CMD, REPO_URL, VERSION } from "@/lib/site";
+import { INSTALL_SCRIPT_CMD, REPO_URL, VERSION } from "@/lib/site";
 import { readPoster } from "@/lib/casts";
 import { CastPlayer } from "./CastPlayer";
 import { CopyCommand } from "./CopyCommand";
@@ -14,6 +14,9 @@ const posterAt = 57;
 /**
  * The first screen: what omatty is for, the one claim it makes, and the
  * command that installs it, with what it runs on stated right beside it.
+ * That command is the one-liner, never brew: it works on every machine
+ * omatty runs on and hands off to the tap where Homebrew is present
+ * (omatty#570). The Install section below still offers brew by name.
  */
 export function Hero({ dict }: { dict: Dictionary }) {
   return (
@@ -22,7 +25,7 @@ export function Hero({ dict }: { dict: Dictionary }) {
       <p className="hero__lead">{dict.hero.lead}</p>
       <p className="hero__claim">{dict.hero.claim}</p>
       <div className="hero__actions">
-        <CopyCommand command={INSTALL_CMD} labels={dict.copy} />
+        <CopyCommand command={INSTALL_SCRIPT_CMD} labels={dict.copy} />
         <a href={REPO_URL}>{dict.hero.source}</a>
       </div>
       <p className="hero__status">
