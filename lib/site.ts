@@ -4,7 +4,7 @@
  *
  *   <CopyCommand command={INSTALL_CMD} … />
  */
-export const VERSION = "0.8.2";
+export const VERSION = "0.9.0";
 
 export const INSTALL_CMD = "brew install WilsonSousajr/tap/omatty";
 
