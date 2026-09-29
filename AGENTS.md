@@ -197,7 +197,8 @@ here passes on a page that says something false.
 
 3. **The limits are findable, not featured.** One line beside the install
    command says the version, pre-1.0, and what omatty runs on; the FAQ says
-   the rest (no Windows, Claude Code only today, `dtach` and `gh` optional).
+   the rest (no Windows, Claude Code only today, `dtach` optional, and a forge's
+   CLI or a token for its API optional, which turns on pull requests and issues).
    Nothing about them may be false or hidden, but they are not a section.
 4. **Every frame of the hero is real omatty output.** Casts are recorded from
    the real binary (`scripts/demo/`). Never hand-edit a cast's content beyond

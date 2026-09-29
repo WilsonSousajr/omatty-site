@@ -89,7 +89,7 @@ export const pt = {
       },
       {
         title: "Entregue, ou desfaça",
-        body: "ctrl+o p faz o push e abre o pull request, ou faz o merge quando o seu gate e os checks da forja já estão verdes. ctrl+o u põe a worktree de volta onde o último turno começou. ctrl+o i mostra as issues e os pull requests do projeto na mesma coluna, e uma issue pode abrir uma sessão só dela.",
+        body: "ctrl+o p faz o push e abre o pull request, ou faz o merge quando o seu gate e os checks da forja já estão verdes. ctrl+o u põe a worktree de volta onde o último turno começou. ctrl+o i mostra as issues e os pull requests do projeto na mesma coluna, esteja ele no GitHub, GitLab, Gitea, Bitbucket ou Azure DevOps, e uma issue pode abrir uma sessão só dela.",
       },
     ],
   },
@@ -191,11 +191,15 @@ export const pt = {
       },
       {
         q: "Ele envia alguma coisa para algum lugar?",
-        a: "Não. O omatty conversa com o git, com o claude e, se você o instalar, com o gh. Os dois números que ele guarda sobre si mesmo ficam em ~/.omatty.",
+        a: "Não. O omatty conversa com o git, com o claude e com a sua forja, pela CLI dela se você tiver uma instalada (gh, glab, tea ou az) ou pela API dela com um token que você já definiu, que o omatty nunca guarda. Os dois números que ele guarda sobre si mesmo ficam em ~/.omatty.",
       },
       {
         q: "Do que preciso para rodar?",
-        a: "macOS ou Linux (sem Windows por enquanto), git e Claude Code. O dtach é opcional e mantém as suas sessões rodando quando você sai; o gh é opcional e liga pull requests e issues. O omatty é pré-1.0, então teclas e configuração ainda podem mudar entre versões menores.",
+        a: "macOS ou Linux (sem Windows por enquanto), git e Claude Code. O dtach é opcional e mantém as suas sessões rodando quando você sai. A CLI da sua forja, ou um token para a API dela, é opcional e liga pull requests e issues. O omatty é pré-1.0, então teclas e configuração ainda podem mudar entre versões menores.",
+      },
+      {
+        q: "Funciona com GitLab, Bitbucket ou Azure DevOps?",
+        a: "Sim. O pull request em cada card, as issues no ctrl+o i e o ctrl+o p funcionam no GitHub, GitLab, Gitea, Forgejo e Codeberg, Bitbucket Cloud e Data Center, e Azure DevOps, pela CLI da própria forja (gh, glab, tea ou az) ou pela API dela com um token do seu ambiente. O Azure DevOps Server ainda não é lido. A tabela Forges do README diz quais forjas uma execução real já mostrou.",
       },
       {
         q: "Quais agentes ele roda?",

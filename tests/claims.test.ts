@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, test } from "vitest";
 import { en } from "@/dictionaries/en";
 import { pt } from "@/dictionaries/pt";
@@ -52,7 +53,33 @@ const banned: [string, RegExp][] = [
     "a hard-coded version, which drifts from lib/site.ts",
     /\bv?\d+\.\d+\.\d+\b/,
   ],
+  [
+    "claim that the forge is gh alone, which omatty's forges ended (omatty#610)",
+    /\bgh is optional and turns on\b|\bo gh é opcional e liga\b|\bif you install it, to gh\b|\bse você o instalar, com o gh\b/i,
+  ],
 ];
+
+/**
+ * Invariant 1 for the forges (omatty#610): the page names a forge only if
+ * omatty's README, in its Forges table, does - and it names every one there,
+ * so a reader on GitLab or Azure DevOps finds theirs.
+ */
+const readme = readFileSync("tests/fixtures/omatty-README.md", "utf8");
+const forgesTable = readme.slice(readme.indexOf("## Forges"));
+const forgeNames = [
+  "GitHub",
+  "GitLab",
+  "Gitea",
+  "Forgejo",
+  "Codeberg",
+  "Bitbucket",
+  "Azure DevOps",
+  "SourceHut",
+  "Gerrit",
+  "Phabricator",
+  "CodeCommit",
+];
+const readForges = ["GitHub", "GitLab", "Gitea", "Bitbucket", "Azure DevOps"];
 
 describe.each([
   ["en", en],
@@ -67,6 +94,30 @@ describe.each([
     const hits = strings(dict).filter(
       ({ text }) =>
         /\|\s*(ba|z)?sh\b/.test(text) && !text.includes(INSTALL_SCRIPT_CMD),
+    );
+    expect(hits).toEqual([]);
+  });
+
+  test("names only forges omatty's README reads (omatty#610)", () => {
+    const text = strings(dict)
+      .map((s) => s.text)
+      .join(" ");
+    const named = forgeNames.filter((name) => text.includes(name));
+    expect(named.filter((name) => !forgesTable.includes(name))).toEqual([]);
+  });
+
+  test("names every forge omatty reads, so a reader finds theirs (omatty#610)", () => {
+    const text = strings(dict)
+      .map((s) => s.text)
+      .join(" ");
+    expect(readForges.filter((name) => !text.includes(name))).toEqual([]);
+  });
+
+  test("names Azure DevOps Server only to say it is not read yet (omatty#610)", () => {
+    const hits = strings(dict).filter(
+      ({ text }) =>
+        /Azure DevOps Server/.test(text) &&
+        !/not (read )?yet|ainda não/i.test(text),
     );
     expect(hits).toEqual([]);
   });
