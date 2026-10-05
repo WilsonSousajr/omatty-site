@@ -77,7 +77,7 @@ export const en = {
       },
       {
         title: "The file tree follows each session",
-        body: "ctrl+o f shows the worktree of the session you are on and moves with you to the next one. When Claude finishes a turn, the tree lists itself again and marks every file Claude added, changed or deleted, so you open the ones that matter. Mark a file read, and it tells you when it changes again.",
+        body: "ctrl+o f shows the worktree of the session you are on and moves with you to the next one. When Claude finishes a turn, the tree lists itself again and marks every file Claude added, changed or deleted, so you open the ones that matter. If Claude moves into another worktree of the repository, the tree and the diff follow it there. Mark a file read, and it tells you when it changes again.",
       },
       {
         title: "Read the diff, and answer it",
@@ -132,7 +132,7 @@ export const en = {
       },
     ],
     footprint:
-      "It never writes your ~/.claude/settings.json. Hooks are passed to each session it starts, and status comes from those hooks and Claude's transcripts, never from reading the screen.",
+      "It never writes your ~/.claude/settings.json, or any other agent's configuration. Hooks are passed to each session it starts, and status comes from those hooks and Claude's transcripts, never from reading the screen.",
   },
   wontDo: {
     title: "What it will not do",
@@ -202,7 +202,7 @@ export const en = {
       },
       {
         q: "Which agents does it run?",
-        a: "Claude Code, as the real claude binary. Other agents are not supported yet.",
+        a: "Claude Code, as the real claude binary, with everything on this page, and OpenAI's Codex, as the real codex binary, its status and token usage read from its own hooks and rollout. Any other agent runs in a pane too: declare its command in ~/.omatty/config.toml and choose it per session, per project or as the default. For those, omatty shows whether the agent is running and says plainly what it cannot know, rather than guessing. OpenCode, Gemini and others are on the way to the same support.",
       },
       {
         q: "What does it cost?",
