@@ -77,7 +77,7 @@ export const pt = {
       },
       {
         title: "A árvore de arquivos acompanha cada sessão",
-        body: "ctrl+o f mostra a worktree da sessão em que você está e vai com você para a próxima. Quando o Claude termina um turno, a árvore se lista de novo e marca cada arquivo que o Claude criou, mudou ou apagou, para você abrir os que importam. Marque um arquivo como lido, e ela avisa quando ele mudar de novo.",
+        body: "ctrl+o f mostra a worktree da sessão em que você está e vai com você para a próxima. Quando o Claude termina um turno, a árvore se lista de novo e marca cada arquivo que o Claude criou, mudou ou apagou, para você abrir os que importam. Se o Claude passa para outra worktree do repositório, a árvore e o diff vão com ele. Marque um arquivo como lido, e ela avisa quando ele mudar de novo.",
       },
       {
         title: "Leia o diff, e responda",
@@ -132,7 +132,7 @@ export const pt = {
       },
     ],
     footprint:
-      "Ele nunca escreve no seu ~/.claude/settings.json. Os hooks são passados a cada sessão que ele inicia, e o estado vem desses hooks e das transcrições do Claude, nunca da leitura da tela.",
+      "Ele nunca escreve no seu ~/.claude/settings.json, nem na configuração de nenhum outro agente. Os hooks são passados a cada sessão que ele inicia, e o estado vem desses hooks e das transcrições do Claude, nunca da leitura da tela.",
   },
   wontDo: {
     title: "O que ele não vai fazer",
@@ -203,7 +203,7 @@ export const pt = {
       },
       {
         q: "Quais agentes ele roda?",
-        a: "O Claude Code, como o binário claude de verdade. Outros agentes ainda não são suportados.",
+        a: "O Claude Code, como o binário claude de verdade, com tudo o que esta página mostra, e o Codex da OpenAI, como o binário codex de verdade, com o estado e o uso de tokens lidos dos hooks e do rollout dele. Qualquer outro agente também roda num painel: declare o comando dele no ~/.omatty/config.toml e escolha por sessão, por projeto ou como padrão. Para esses, o omatty mostra se o agente está rodando e diz claramente o que não consegue saber, em vez de adivinhar. OpenCode, Gemini e outros estão a caminho do mesmo suporte.",
       },
       {
         q: "Quanto custa?",

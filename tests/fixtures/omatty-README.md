@@ -74,7 +74,21 @@ is to get you to the point of catching them sooner.
 
 ## Status
 
-**v0.9.0**, 2026-09-29 — your forge, whichever it is. The card's pull request
+**v0.11.0**, 2026-10-05 — Codex, any agent, and a review that follows
+claude. Codex runs beside claude as a first-class agent (#152), a session can
+run any command you declare as an agent, and omatty shows only what that agent
+lets it know (#525, #526). The review column follows claude
+into the worktree it moved to (#659), the file tree opens closed (#593), and
+the tracker stays in sync, with `]`/`[` and `tab` to reach its pull requests
+(#658, #662, #663).
+
+v0.10.0, 2026-10-01 — the architecture. The code is rebuilt in the shape
+of [ADR 0001](docs/adr/0001-architecture.md), with nothing you see changed:
+omatty no longer waits on git or the disk while it draws, every git call has
+a deadline, and `omatty sessions --json` and `omatty status --json` hand a
+script what the sidebar shows.
+
+v0.9.0, 2026-09-29 — your forge, whichever it is. The card's pull request
 and CI, the tracker, the browser and `ctrl+o p` work on GitLab, Gitea, Forgejo
 and Codeberg, Bitbucket and Azure DevOps as they did on GitHub, through each
 forge's own CLI or its REST API with a token omatty borrows and never stores.
@@ -114,23 +128,24 @@ changed words picked out, and `ctrl+o z` zooms the column when a view needs the
 room. Install with `curl -fsSL https://omatty.com/install.sh | sh` or
 `brew install WilsonSousajr/tap/omatty`; `CHANGELOG.md` has the whole list.
 
-| Milestone                    | Delivers                                                                                                                                                                                                                                                                                                                                                             |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **M1** Skeleton              | Projects and sessions registered, worktrees created on demand, the real `claude` binary running inside an embedded terminal pane, and modal key routing.                                                                                                                                                                                                             |
-| **M2** Status                | Live per-session glyphs, age and token usage in the sidebar, from Claude Code hooks and each session's transcript — never scraped from the screen.                                                                                                                                                                                                                   |
-| **M3** Review                | A diff pane over everything a session changed, with comments anchored to line _content_, sent back as one message.                                                                                                                                                                                                                                                   |
-| **M4** Lifecycle             | Rename, archive, jump by name, and discover the projects claude already knows you use.                                                                                                                                                                                                                                                                               |
-| **M5** File tree             | The session's worktree beside its diff, with change markers and syntax-highlighted previews.                                                                                                                                                                                                                                                                         |
-| **M6** Persistence           | With `dtach`, quitting detaches rather than ends; relaunching reattaches. Sessions claude already has can be adopted.                                                                                                                                                                                                                                                |
-| **M7** Reach                 | A config file, mouse support, the agent seam, and a visual identity.                                                                                                                                                                                                                                                                                                 |
-| **M8** Surface               | The frame, colour rule, cards, header, footer and diffstat that the panes are drawn in.                                                                                                                                                                                                                                                                              |
-| **M9** The Gate              | A project carries the check line that says whether work in it is sound. omatty runs it per session, shows the verdict on the card, and sends the failures back into the session.                                                                                                                                                                                     |
-| **M10** Coverage on the diff | Of the lines a session added, the ones no test covers, marked in the diff with a count per file — and a word on the title when a change brought no tests with it.                                                                                                                                                                                                    |
-| **M11** The Harness          | Nothing an operator sees: invariant 4's import boundaries, module hygiene, per-function C.R.A.P. and the package dependency structure become steps of this repository's gate that fail.                                                                                                                                                                              |
-| **M12** The Field            | What the rest of the field ships and why omatty declines most of it, researched at code level; then everything that came out of it — review scoped to the last turn and to what you have read, generated files folded away, several comments on a line, a session put back to where its turn began, and a green one shipped from its card.                           |
-| **M13** Memory and idle CPU  | Idle CPU cut by about 55%, and a per-session leak on archive fixed.                                                                                                                                                                                                                                                                                                  |
-| **M14** The Tracker          | A project's open issues and pull requests in the review column, read through your own `gh` and never written to: counts on every header, one item's body and comments on `enter`, and a worktree session named after the issue you picked.                                                                                                                           |
-| **M15** The Polish           | The review column made worth living in: one list window and one state vocabulary across every face, chrome that names the face you are on, and `ctrl+o z` to zoom it; a gate that reads like a CI check page, a compact tree, a tracker with review state and a preview, a syntax-highlighted diff with file and hunk navigation, and help that opens where you are. |
+| Milestone                    | Delivers                                                                                                                                                                                                                                                                                                                                                                        |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **M1** Skeleton              | Projects and sessions registered, worktrees created on demand, the real `claude` binary running inside an embedded terminal pane, and modal key routing.                                                                                                                                                                                                                        |
+| **M2** Status                | Live per-session glyphs, age and token usage in the sidebar, from Claude Code hooks and each session's transcript — never scraped from the screen.                                                                                                                                                                                                                              |
+| **M3** Review                | A diff pane over everything a session changed, with comments anchored to line _content_, sent back as one message.                                                                                                                                                                                                                                                              |
+| **M4** Lifecycle             | Rename, archive, jump by name, and discover the projects claude already knows you use.                                                                                                                                                                                                                                                                                          |
+| **M5** File tree             | The session's worktree beside its diff, with change markers and syntax-highlighted previews.                                                                                                                                                                                                                                                                                    |
+| **M6** Persistence           | With `dtach`, quitting detaches rather than ends; relaunching reattaches. Sessions claude already has can be adopted.                                                                                                                                                                                                                                                           |
+| **M7** Reach                 | A config file, mouse support, the agent seam, and a visual identity.                                                                                                                                                                                                                                                                                                            |
+| **M8** Surface               | The frame, colour rule, cards, header, footer and diffstat that the panes are drawn in.                                                                                                                                                                                                                                                                                         |
+| **M9** The Gate              | A project carries the check line that says whether work in it is sound. omatty runs it per session, shows the verdict on the card, and sends the failures back into the session.                                                                                                                                                                                                |
+| **M10** Coverage on the diff | Of the lines a session added, the ones no test covers, marked in the diff with a count per file — and a word on the title when a change brought no tests with it.                                                                                                                                                                                                               |
+| **M11** The Harness          | Nothing an operator sees: invariant 4's import boundaries, module hygiene, per-function C.R.A.P. and the package dependency structure become steps of this repository's gate that fail.                                                                                                                                                                                         |
+| **M12** The Field            | What the rest of the field ships and why omatty declines most of it, researched at code level; then everything that came out of it — review scoped to the last turn and to what you have read, generated files folded away, several comments on a line, a session put back to where its turn began, and a green one shipped from its card.                                      |
+| **M13** Memory and idle CPU  | Idle CPU cut by about 55%, and a per-session leak on archive fixed.                                                                                                                                                                                                                                                                                                             |
+| **M14** The Tracker          | A project's open issues and pull requests in the review column, read through your own `gh` and never written to: counts on every header, one item's body and comments on `enter`, and a worktree session named after the issue you picked.                                                                                                                                      |
+| **M15** The Polish           | The review column made worth living in: one list window and one state vocabulary across every face, chrome that names the face you are on, and `ctrl+o z` to zoom it; a gate that reads like a CI check page, a compact tree, a tracker with review state and a preview, a syntax-highlighted diff with file and hunk navigation, and help that opens where you are.            |
+| **M16** The Forges           | The card's pull request and CI, the tracker, browse and `ctrl+o p` on GitLab, Gitea/Forgejo/Codeberg, Bitbucket and Azure DevOps as on GitHub, through each forge's own CLI or its REST API with a token stored nowhere; `ctrl+o p` merging only the commit that was green, into the branch the session came from. The [Forges](#forges) table says which a real run has shown. |
 
 Pre-1.0 deliberately: the embedded terminal library underneath is itself
 pre-1.0, and the key table, `config.toml` keys and `state.json` schema are
@@ -208,6 +223,8 @@ omatty gate my-app                    # show the gate, or propose one and confir
 omatty gate my-app --detect           # print the proposal, write nothing
 omatty carry my-app .env certs        # files every new worktree of it carries
 omatty carry my-app                   # show that list
+omatty sessions --json                # every session, for a script
+omatty status --json                  # each session's status and tokens, read from its transcript
 omatty                                # run the TUI
 omatty --version                      # which build is this
 ```
@@ -269,31 +286,32 @@ money on every run, and the diff it reads is untrusted input.
 
 Inside the TUI every keystroke goes to Claude except the `ctrl+o` leader:
 
-| Key                     | Action                                                                                  |
-| ----------------------- | --------------------------------------------------------------------------------------- |
-| `ctrl+o j` / `ctrl+o k` | move between sessions                                                                   |
-| `ctrl+o ]` / `ctrl+o [` | move between projects, including one with no sessions yet                               |
-| `ctrl+o tab`            | fold or unfold the project the cursor is in; a click on its header does the same        |
-| `ctrl+o n`              | new session on the main checkout                                                        |
-| `ctrl+o N`              | new session on a fresh worktree                                                         |
-| `ctrl+o d`              | open or close the diff pane                                                             |
-| `ctrl+o f`              | open or close the file tree                                                             |
-| `ctrl+o g`              | open or close the gate pane, and run the gate                                           |
-| `ctrl+o i`              | open or close this project's issues and pull requests                                   |
-| `ctrl+o z`              | zoom the review column over the session pane, or back; `esc` also brings the split back |
-| `ctrl+o m`              | hand the mouse back to your terminal, or take it back                                   |
-| `ctrl+o r`              | restart a crashed session                                                               |
-| `ctrl+o s`              | stop the selected session's claude, keeping the session; `enter` resumes it             |
-| `ctrl+o u`              | put the session's worktree back to the start of its last turn, after a confirmation     |
-| `ctrl+o p`              | ship a green session: push and open its pull request, or merge one already green        |
-| `ctrl+o B`              | rename a worktree session's branch                                                      |
-| `ctrl+o R`              | rename the selected session                                                             |
-| `ctrl+o x`              | archive the selected session, or forget an empty project                                |
-| `ctrl+o /`              | jump to a session by typing part of its name                                            |
-| `ctrl+o a`              | register a project claude already knows you use                                         |
-| `ctrl+o A`              | adopt a claude session already in this project                                          |
-| `ctrl+o ?`              | show every key, starting with the ones for the face in front of you; `/` filters them   |
-| `ctrl+o q`              | quit                                                                                    |
+| Key                     | Action                                                                                              |
+| ----------------------- | --------------------------------------------------------------------------------------------------- |
+| `ctrl+o j` / `ctrl+o k` | move between sessions                                                                               |
+| `ctrl+o ]` / `ctrl+o [` | move between projects, including one with no sessions yet                                           |
+| `ctrl+o tab`            | fold or unfold the project the cursor is in; a click on its header does the same                    |
+| `ctrl+o n`              | new session on the main checkout; with two or more agents installed, it then asks which one runs it |
+| `ctrl+o N`              | new session on a fresh worktree                                                                     |
+| `ctrl+o d`              | open or close the diff pane                                                                         |
+| `ctrl+o f`              | open or close the file tree                                                                         |
+| `ctrl+o g`              | open or close the gate pane, and run the gate                                                       |
+| `ctrl+o i`              | open or close this project's issues and pull requests                                               |
+| `ctrl+o z`              | zoom the review column over the session pane, or back; `esc` also brings the split back             |
+| `ctrl+o m`              | hand the mouse back to your terminal, or take it back                                               |
+| `ctrl+o r`              | restart a crashed session                                                                           |
+| `ctrl+o s`              | stop the selected session's claude, keeping the session; `enter` resumes it                         |
+| `ctrl+o u`              | put the session's worktree back to the start of its last turn, after a confirmation                 |
+| `ctrl+o p`              | ship a green session: push and open its pull request, or merge one already green                    |
+| `ctrl+o B`              | rename a worktree session's branch                                                                  |
+| `ctrl+o R`              | rename the selected session                                                                         |
+| `ctrl+o c`              | choose the agent the selected project's new sessions run                                            |
+| `ctrl+o x`              | archive the selected session, or forget an empty project                                            |
+| `ctrl+o /`              | jump to a session by typing part of its name                                                        |
+| `ctrl+o a`              | register a project claude already knows you use                                                     |
+| `ctrl+o A`              | adopt a claude session already in this project                                                      |
+| `ctrl+o ?`              | show every key, starting with the ones for the face in front of you; `/` filters them               |
+| `ctrl+o q`              | quit                                                                                                |
 
 `ctrl+o s` ends a session's `claude` process and frees its memory (a few
 hundred MB each) without forgetting the session: its card keeps its status and
@@ -398,8 +416,19 @@ no file at all these are the values in force:
 ```toml
 leader = "ctrl+o"          # the one key omatty intercepts; bubbletea spelling ("ctrl+a", not "C-a")
 claude_bin = "claude"      # the binary each session runs, resolved on PATH or absolute
+default_agent = "claude"   # the agent a new session runs unless its project or ctrl+o n says otherwise
 worktree_root = "~/.omatty/wt"   # where `omatty new ... <branch>` and ctrl+o N put worktrees
 base_branch = ""           # fork worktrees from this branch; empty means the checkout's current one
+
+[agents.claude]             # one table per agent; bin is its binary, and here wins over claude_bin
+bin = "claude"
+
+# [agents.codex]           # built in: status, waiting and resume from codex's own hooks and
+# bin = "codex"            # rollout, passed per run as -c flags; nothing is written to ~/.codex.
+#                          # codex binds ctrl+o to copy - under omatty that key is the leader
+
+# [agents.aider]           # any other agent, declared by its command: it runs in the
+# command = ["aider", "--no-auto-commits"]   # session's directory, and omatty knows only whether it runs
 
 [naming]
 model = false              # let a headless claude call improve auto-derived session titles
@@ -656,12 +685,14 @@ its issues matter most.
 | `j` / `k`           | move through the list, or scroll an open item                                      |
 | `g` / `G`           | the first row, or the last - the same on every face of the column                  |
 | `ctrl+d` / `ctrl+u` | half a page down, or up                                                            |
+| `]` / `[`           | the first pull request, or back to the first issue                                 |
+| `tab`               | fold the list the cursor is in to its heading and count, or open it again          |
 | `enter`             | read the item under the cursor: its body and its comments                          |
 | `/`                 | filter by number, title or label as you type; `enter` keeps it, `esc` clears it    |
 | `n`                 | start a worktree session named and branched from the issue                         |
 | `a`                 | type the item's reference into the selected session's prompt, unsent               |
 | `b`                 | open the item in your browser                                                      |
-| `r`                 | read both lists again now                                                          |
+| `r`                 | read both lists again now, and try again a forge that could not be read            |
 | `h` / `l` / `0`     | pan along a row too wide for the column                                            |
 | `esc`               | from an item back to the list; from the list, lift the filter, then back to Claude |
 
@@ -761,9 +792,11 @@ belongs. omatty turns it off by name in every merge it sends.
 The cost, on top of the pull request reads the cards already make: one issue
 list per project every five minutes, one more when you open the tracker or press
 `r`, and one read of an item you open, cached until you press `r` on it. Nothing
-at all while omatty is in the background, never more than once in thirty seconds
-for one project, and nothing after the forge's CLI and token are both found
-missing. An item is read to 64 KiB and says so if there was more. For a
+at all while omatty is in the background, and never more than once in thirty
+seconds for one project unless you asked. A forge whose CLI and token are both
+missing, or that refused the token, is asked again only every five minutes and
+on `r` - so installing `gh` or fixing a token mid-run is picked up without a
+restart. An item is read to 64 KiB and says so if there was more. For a
 repository on no forge omatty reads, the column says so and the sidebar headers
 stay as they were.
 
